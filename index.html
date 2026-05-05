@@ -1388,31 +1388,37 @@ let vendorDB = [];
 
 /* ===== Init ===== */
 window.onload = async () => {
-  // Show loading indicator
+  // 1. 畫面瞬間先載入範例與 UI
+  loadSample();
+
+  // 2. 顯示背景連線提示
   const loadingEl = document.createElement('div');
   loadingEl.id = 'fb-loading';
   loadingEl.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:9999;background:#1c1917;color:#e7e5e4;text-align:center;padding:8px 20px;font-size:12px;font-family:sans-serif;border-radius:20px;box-shadow:0 4px 16px rgba(0,0,0,.35);pointer-events:none;';
-  loadingEl.textContent = '☁️ 正在連線到雲端資料庫…';
+  loadingEl.textContent = '☁️ 背景正在同步雲端資料庫…';
   document.body.appendChild(loadingEl);
 
-  // Wait for Firebase to be ready (max 5s)
+  // 3. 等待 Firebase 初始化
   let waited = 0;
   while (!window._fbDb && waited < 5000) {
     await new Promise(r => setTimeout(r, 100));
     waited += 100;
   }
 
+  // 4. 下載資料並更新 UI
   try {
     await Promise.all([loadDBFromStorage(), loadVendorDBFromStorage()]);
     loadingEl.style.background = '#059669';
-    loadingEl.textContent = '✅ 雲端資料庫載入完成';
+    loadingEl.textContent = '✅ 雲端資料同步完成';
+    if(document.getElementById('db-overlay').classList.contains('open')) renderDB();
+    if(document.getElementById('vdb-overlay').classList.contains('open')) renderVendorDB();
     setTimeout(() => loadingEl.remove(), 1800);
   } catch(e) {
     loadingEl.style.background = '#dc2626';
-    loadingEl.textContent = '⚠️ 雲端載入失敗，使用空資料庫';
+    loadingEl.textContent = '⚠️ 雲端連線失敗，請檢查網路或資料庫權限';
+    console.error('Firebase Error:', e);
     setTimeout(() => loadingEl.remove(), 3000);
   }
-  loadSample();
 };
 
 /* ===== Print handling ===== */
@@ -1731,7 +1737,7 @@ function closeAddCol(){ $('addcol-overlay').classList.remove('open'); }
 function confirmAddCol(){
   const name = $('addcol-name').value.trim();
   if(!name){ alert('請輸入欄位標題'); return; }
-  const col = { id:'cc_'+Date.now(), name, width:$('addcol-width').value, align:$('addcol-align').value };
+  const col = { id:'cc_'+Date.now(), name, width:$addcol-width.value, align:$('addcol-align').value };
   customCols.push(col);
   renderCustomColChips();
   renderTable();
@@ -2640,19 +2646,24 @@ function downloadTemplate(){
 
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import { getFirestore, doc, getDoc, setDoc, initializeFirestore, persistentLocalCache } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAKXSY50IPjmCcexySkUcNX2KRaP_lbKGQ",
-  authDomain: "quotation-tool-1059b.firebaseapp.com",
-  projectId: "quotation-tool-1059b",
-  storageBucket: "quotation-tool-1059b.firebasestorage.app",
-  messagingSenderId: "815369160880",
-  appId: "1:815369160880:web:ed48d1642a8280805d1375"
+  apiKey: "AIzaSyBhH-0Nzq181BXT04yDld9Ibx6DaWMbE6c",
+  authDomain: "quotation-tool-8141e.firebaseapp.com",
+  projectId: "quotation-tool-8141e",
+  storageBucket: "quotation-tool-8141e.firebasestorage.app",
+  messagingSenderId: "1060048774310",
+  appId: "1:1060048774310:web:c2b7d3bc4436347aa10067",
+  measurementId: "G-MH3F35KSZ0"
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+
+// 啟用離線快取 (Local Cache)，達到秒開的效果
+const db = initializeFirestore(app, {
+  localCache: persistentLocalCache()
+});
 
 window._fbDb = db;
 window._fbDoc = doc;
