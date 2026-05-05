@@ -1391,7 +1391,7 @@ window.onload = async () => {
   // Show loading indicator
   const loadingEl = document.createElement('div');
   loadingEl.id = 'fb-loading';
-  loadingEl.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:#b45309;color:white;text-align:center;padding:8px;font-size:12px;font-family:sans-serif;';
+  loadingEl.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:9999;background:#1c1917;color:#e7e5e4;text-align:center;padding:8px 20px;font-size:12px;font-family:sans-serif;border-radius:20px;box-shadow:0 4px 16px rgba(0,0,0,.35);pointer-events:none;';
   loadingEl.textContent = '☁️ 正在連線到雲端資料庫…';
   document.body.appendChild(loadingEl);
 
@@ -2636,33 +2636,29 @@ function downloadTemplate(){
 /* ===========================
    FIREBASE INIT (loaded via CDN)
 =========================== */
-async function initFirebase() {
-  const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js');
-  const { getFirestore, doc, getDoc, setDoc } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
+</script>
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyAKXSY50IPjmCcexySkUcNX2KRaP_lbKGQ",
-    authDomain: "quotation-tool-1059b.firebaseapp.com",
-    databaseURL: "https://quotation-tool-1059b-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "quotation-tool-1059b",
-    storageBucket: "quotation-tool-1059b.firebasestorage.app",
-    messagingSenderId: "815369160880",
-    appId: "1:815369160880:web:ed48d1642a8280805d1375",
-    measurementId: "G-QLPNWWXPZF"
-  };
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+const firebaseConfig = {
+  apiKey: "AIzaSyAKXSY50IPjmCcexySkUcNX2KRaP_lbKGQ",
+  authDomain: "quotation-tool-1059b.firebaseapp.com",
+  projectId: "quotation-tool-1059b",
+  storageBucket: "quotation-tool-1059b.firebasestorage.app",
+  messagingSenderId: "815369160880",
+  appId: "1:815369160880:web:ed48d1642a8280805d1375"
+};
 
-  // Expose to global scope for storage functions
-  window._fbDb = db;
-  window._fbDoc = doc;
-  window._fbGetDoc = getDoc;
-  window._fbSetDoc = setDoc;
-}
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-// Initialize Firebase before window.onload fires
-initFirebase().catch(e => console.error('Firebase init failed', e));
+window._fbDb = db;
+window._fbDoc = doc;
+window._fbGetDoc = getDoc;
+window._fbSetDoc = setDoc;
+window._fbReady = true;
 </script>
 </body>
 </html>
