@@ -1387,9 +1387,31 @@ let clientDB = [];
 let vendorDB = [];
 
 /* ===== Init ===== */
-window.onload = () => {
-  loadDBFromStorage();
-  loadVendorDBFromStorage();
+window.onload = async () => {
+  // Show loading indicator
+  const loadingEl = document.createElement('div');
+  loadingEl.id = 'fb-loading';
+  loadingEl.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:#b45309;color:white;text-align:center;padding:8px;font-size:12px;font-family:sans-serif;';
+  loadingEl.textContent = '☁️ 正在連線到雲端資料庫…';
+  document.body.appendChild(loadingEl);
+
+  // Wait for Firebase to be ready (max 5s)
+  let waited = 0;
+  while (!window._fbDb && waited < 5000) {
+    await new Promise(r => setTimeout(r, 100));
+    waited += 100;
+  }
+
+  try {
+    await Promise.all([loadDBFromStorage(), loadVendorDBFromStorage()]);
+    loadingEl.style.background = '#059669';
+    loadingEl.textContent = '✅ 雲端資料庫載入完成';
+    setTimeout(() => loadingEl.remove(), 1800);
+  } catch(e) {
+    loadingEl.style.background = '#dc2626';
+    loadingEl.textContent = '⚠️ 雲端載入失敗，使用空資料庫';
+    setTimeout(() => loadingEl.remove(), 3000);
+  }
   loadSample();
 };
 
@@ -2257,12 +2279,16 @@ window.addEventListener('load', () => {
 /* ===========================
    CLIENT DATABASE
 =========================== */
-function loadDBFromStorage(){
-  try{ const r=localStorage.getItem('cdb_v2'); clientDB=r?JSON.parse(r):[]; }
-  catch{ clientDB=[]; }
+async function loadDBFromStorage(){
+  try{
+    const snap = await window._fbGetDoc(window._fbDoc(window._fbDb,'databases','clientDB'));
+    clientDB = snap.exists() ? (snap.data().list || []) : [];
+  } catch(e){ console.warn('loadClientDB error',e); clientDB=[]; }
 }
-function saveDBToStorage(){
-  try{ localStorage.setItem('cdb_v2',JSON.stringify(clientDB)); }catch{}
+async function saveDBToStorage(){
+  try{
+    await window._fbSetDoc(window._fbDoc(window._fbDb,'databases','clientDB'),{list: clientDB});
+  } catch(e){ console.warn('saveClientDB error',e); }
 }
 
 /* Open/Close DB */
@@ -2363,12 +2389,16 @@ function closeSaveIfBg(e){ if(e.target===$('save-overlay')) closeSave(); }
 /* ===========================
    VENDOR DATABASE
 =========================== */
-function loadVendorDBFromStorage(){
-  try{ const r=localStorage.getItem('vdb_v1'); vendorDB=r?JSON.parse(r):[]; }
-  catch{ vendorDB=[]; }
+async function loadVendorDBFromStorage(){
+  try{
+    const snap = await window._fbGetDoc(window._fbDoc(window._fbDb,'databases','vendorDB'));
+    vendorDB = snap.exists() ? (snap.data().list || []) : [];
+  } catch(e){ console.warn('loadVendorDB error',e); vendorDB=[]; }
 }
-function saveVendorDBToStorage(){
-  try{ localStorage.setItem('vdb_v1',JSON.stringify(vendorDB)); }catch{}
+async function saveVendorDBToStorage(){
+  try{
+    await window._fbSetDoc(window._fbDoc(window._fbDb,'databases','vendorDB'),{list: vendorDB});
+  } catch(e){ console.warn('saveVendorDB error',e); }
 }
 
 function openVendorDB(){
@@ -2603,6 +2633,36 @@ function downloadTemplate(){
   XLSX.utils.book_append_sheet(wb,ws,'客戶資料');
   XLSX.writeFile(wb,'客戶資料庫範本.xlsx');
 }
+/* ===========================
+   FIREBASE INIT (loaded via CDN)
+=========================== */
+async function initFirebase() {
+  const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js');
+  const { getFirestore, doc, getDoc, setDoc } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAKXSY50IPjmCcexySkUcNX2KRaP_lbKGQ",
+    authDomain: "quotation-tool-1059b.firebaseapp.com",
+    databaseURL: "https://quotation-tool-1059b-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "quotation-tool-1059b",
+    storageBucket: "quotation-tool-1059b.firebasestorage.app",
+    messagingSenderId: "815369160880",
+    appId: "1:815369160880:web:ed48d1642a8280805d1375",
+    measurementId: "G-QLPNWWXPZF"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Expose to global scope for storage functions
+  window._fbDb = db;
+  window._fbDoc = doc;
+  window._fbGetDoc = getDoc;
+  window._fbSetDoc = setDoc;
+}
+
+// Initialize Firebase before window.onload fires
+initFirebase().catch(e => console.error('Firebase init failed', e));
 </script>
 </body>
 </html>
