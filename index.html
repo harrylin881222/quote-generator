@@ -98,7 +98,7 @@ body { font-family: var(--font-body); background: var(--bg); color: var(--ink); 
   display: flex; flex-direction: column;
   position: relative; isolation: isolate;
   transition: font-size .2s, font-family .2s;
-  overflow: visible;
+  overflow: hidden;
 }
 .paper::before {
   content: ''; position: absolute; inset: 0;
@@ -152,12 +152,14 @@ input[type="date"] { cursor: pointer; }
 /* RIGHT side of banner: logo */
 .banner-logo-area {
   display: flex; flex-direction: column; align-items: flex-end; gap: 4px;
+  flex-shrink: 0;
 }
 .logo-box {
   width: 140px; height: 70px;
   border: 1.5px dashed #c4bdb6; border-radius: 6px;
   display: flex; align-items: center; justify-content: center;
   cursor: pointer; overflow: hidden; background: #f9f7f4; transition: .15s;
+  flex-shrink: 0;
 }
 .logo-box:hover { border-color: var(--t-acc, var(--acc)); background: #fef9f0; }
 .logo-box img { width: 100%; height: 100%; object-fit: contain; display: none; }
@@ -252,12 +254,12 @@ input[type="date"] { cursor: pointer; }
 .item-table tbody tr:hover td { background: #faf7f2; }
 .item-table tbody tr:last-child td { border-bottom: none; }
 .th-no { width: 4%; text-align: center; }
-.th-name { width: 44%; }
+.th-name { width: 42%; }
 .th-qty { width: 9%; text-align: center; }
 .th-unit { width: 9%; text-align: center; }
-.th-price { width: 15%; text-align: right; }
-.th-amt { width: 15%; text-align: right; }
-.th-del { display: none; }
+.th-price { width: 14%; text-align: right; }
+.th-amt { width: 14%; text-align: right; }
+.th-del { width: 28px; min-width: 28px; padding: 0; }
 .td-no { text-align: center; color: var(--ink3); font-size: 11px; font-family: monospace; }
 .td-qty input, .td-unit input { text-align: center; }
 .td-price input { text-align: right; }
@@ -271,31 +273,29 @@ input[type="date"] { cursor: pointer; }
 .btn-del-row { background: transparent; border: none; cursor: pointer; color: #d6cfc5; padding: 4px; border-radius: 3px; transition: .15s; display: flex; align-items: center; }
 .btn-del-row:hover { color: var(--danger); background: #fee2e2; }
 
-/* 刪除按鈕欄：視覺上在表格右側外，但仍是合法 td */
+/* 刪除按鈕：獨立小欄，hover 列時才顯示 */
 .td-del-float {
-  width: 0;
-  padding: 0;
+  width: 28px;
+  min-width: 28px;
+  padding: 0 2px;
   border: none;
-  overflow: visible;
-  white-space: nowrap;
+  text-align: center;
   vertical-align: middle;
 }
 .row-del-btn {
-  position: relative;
-  left: 6px;
   background: transparent;
   border: none;
   cursor: pointer;
-  color: #d6cfc5;
+  color: transparent;
   padding: 3px 4px;
   border-radius: 3px;
-  transition: .15s;
-  display: none;
+  transition: color .15s, background .15s;
+  display: inline-flex;
   align-items: center;
   line-height: 0;
 }
-.row-del-btn:hover { color: var(--danger); background: #fee2e2; }
-.item-table tbody tr:hover .row-del-btn { display: inline-flex; }
+.item-table tbody tr:hover .row-del-btn { color: #d6cfc5; }
+.row-del-btn:hover { color: var(--danger) !important; background: #fee2e2; }
 .btn-add-row {
   width: 100%; padding: 8px; font-family: inherit; font-size: 11px;
   color: var(--ink3); background: transparent;
@@ -619,7 +619,7 @@ input[type="date"] { cursor: pointer; }
 @media print {
   @page { size: A4; margin: 0; }
   body { background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .topbar, .toolbar, .btn-add-row, .th-del, .td-del, .td-del-float, .overlay, .save-overlay, .field-style-overlay, .table-toolbar, #inline-toolbar, .col-resize-handle, .drag-dot { display: none !important; }
+  .topbar, .toolbar, .btn-add-row, .th-del, .td-del, .td-del-float, .row-del-btn, .overlay, .save-overlay, .field-style-overlay, .table-toolbar, #inline-toolbar, .col-resize-handle, .drag-dot { display: none !important; }
   .canvas { padding: 0; display: block; }
   .paper { box-shadow: none; width: 210mm; min-height: 297mm; padding: 12mm 16mm; margin: 0; }
   input, textarea { border: none !important; background: transparent !important; box-shadow: none !important; resize: none; }
