@@ -132,7 +132,6 @@ input[type="date"] { cursor: pointer; }
   position: relative; z-index: 1;
 }
 
-/* LEFT side of banner: big title */
 .banner-title-area {}
 .doc-title-text {
   font-family: var(--title-font, 'DM Serif Display', var(--font-serif));
@@ -149,25 +148,31 @@ input[type="date"] { cursor: pointer; }
   text-transform: uppercase; margin-top: 4px;
 }
 
-/* RIGHT side of banner: logo */
 .banner-logo-area {
   display: flex; flex-direction: column; align-items: flex-end; gap: 4px;
   flex-shrink: 0;
 }
 .logo-box {
+  position: relative;
   width: 140px; height: 70px;
   border: 1.5px dashed #c4bdb6; border-radius: 6px;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; overflow: hidden; background: #f9f7f4; transition: .15s;
+  background: #f9f7f4; transition: .15s;
   flex-shrink: 0;
 }
 .logo-box:hover { border-color: var(--t-acc, var(--acc)); background: #fef9f0; }
-.logo-box img { width: 100%; height: 100%; object-fit: contain; display: none; }
-.logo-hint { font-size: 9px; color: #c4bdb6; text-align: center; line-height: 1.5; }
+.logo-hint { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 9px; color: #c4bdb6; text-align: center; line-height: 1.5; cursor: pointer; }
 .logo-hint svg { width: 18px; height: 18px; display: block; margin: 0 auto 2px; }
 #logo-input { display: none; }
 .logo-clear { font-size: 9px; color: #a8a29e; cursor: pointer; display: none; }
 .logo-clear:hover { color: var(--danger); }
+.logo-resize-handle {
+  position: absolute; right: -1px; bottom: -1px; width: 14px; height: 14px;
+  cursor: se-resize; background: var(--t-acc, #b45309);
+  border-radius: 2px 0 4px 0; z-index: 10; display: none;
+  align-items: center; justify-content: center; opacity: 0; transition: opacity .15s;
+}
+.logo-box:not(.no-logo):hover .logo-resize-handle { opacity: 1; }
+.logo-box:not(.no-logo) .logo-resize-handle { display: flex; }
 
 /* ========================================
    SECTION 2: INFO BLOCK (Client | Vendor)
@@ -182,10 +187,7 @@ input[type="date"] { cursor: pointer; }
   position: relative; z-index: 1;
 }
 
-.info-col {
-  flex: 1;
-  padding: 14px 16px;
-}
+.info-col { flex: 1; padding: 14px 16px; }
 .info-col-client { border-right: 1.5px solid var(--t-line, #c9bfb0); }
 
 .info-col-eyebrow {
@@ -197,7 +199,6 @@ input[type="date"] { cursor: pointer; }
 }
 .info-col-eyebrow svg { opacity: .6; }
 
-/* Entity name (big) */
 .entity-name-input {
   font-size: 15px; font-weight: 700; letter-spacing: .5px;
   font-family: var(--font-serif);
@@ -209,18 +210,13 @@ input[type="date"] { cursor: pointer; }
 .entity-name-input:focus { border-bottom-color: var(--t-acc, var(--acc)) !important; }
 .entity-name-input:hover { background: transparent !important; border-color: transparent transparent var(--t-acc,var(--acc)) transparent !important; }
 
-/* vendor name left-aligned same as client */
-
-/* Field rows inside info-col */
 .fields-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px 12px; }
 .f-row { display: flex; align-items: baseline; gap: 4px; }
 .f-lbl { font-size: 10px; color: var(--ink3); white-space: nowrap; flex-shrink: 0; width: 42px; }
 .f-inp { flex: 1; font-size: 12px; }
 
-/* vendor fields - same layout as client, right-aligned text only for name */
 .info-col-vendor .entity-name-input { text-align: left; }
 
-/* Eyebrow DB button */
 .eyebrow-db-btn {
   margin-left: 5px; cursor: pointer; opacity: .5;
   display: inline-flex; align-items: center;
@@ -238,8 +234,9 @@ input[type="date"] { cursor: pointer; }
 }
 .meta-item { flex: 1; padding: 8px 13px; border-right: 1px solid rgba(255,255,255,.08); }
 .meta-item:last-child { border-right: none; }
-.meta-key { font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,.38); margin-bottom: 2px; }
-.meta-item input { color: var(--t-head-fg, white) !important; font-size: 12px; font-weight: 500; }
+.meta-key { font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: #ffffff !important; opacity: 0.85; margin-bottom: 2px; }
+.meta-item input { color: #ffffff !important; font-size: 12px; font-weight: 500; }
+.meta-item input::placeholder { color: rgba(255,255,255,0.6) !important; }
 .meta-item input:hover { background: rgba(255,255,255,.06) !important; border-color: transparent !important; }
 .meta-item input:focus { background: rgba(255,255,255,.1) !important; border-color: rgba(255,255,255,.22) !important; box-shadow: none !important; }
 
@@ -264,7 +261,6 @@ input[type="date"] { cursor: pointer; }
 .td-qty input, .td-unit input { text-align: center; }
 .td-price input { text-align: right; }
 .td-amt { text-align: right; font-family: monospace; font-size: 12px; font-weight: 500; }
-/* 表格 td 預設置中 */
 .item-table td input, .item-table td textarea { text-align: center; }
 .item-table td.td-name input, .item-table td.td-name textarea { text-align: left; }
 .item-table td.td-price input { text-align: right; }
@@ -273,35 +269,11 @@ input[type="date"] { cursor: pointer; }
 .btn-del-row { background: transparent; border: none; cursor: pointer; color: #d6cfc5; padding: 4px; border-radius: 3px; transition: .15s; display: flex; align-items: center; }
 .btn-del-row:hover { color: var(--danger); background: #fee2e2; }
 
-/* 刪除按鈕：獨立小欄，hover 列時才顯示 */
-.td-del-float {
-  width: 28px;
-  min-width: 28px;
-  padding: 0 2px;
-  border: none;
-  text-align: center;
-  vertical-align: middle;
-}
-.row-del-btn {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: transparent;
-  padding: 3px 4px;
-  border-radius: 3px;
-  transition: color .15s, background .15s;
-  display: inline-flex;
-  align-items: center;
-  line-height: 0;
-}
+.td-del-float { width: 28px; min-width: 28px; padding: 0 2px; border: none; text-align: center; vertical-align: middle; }
+.row-del-btn { background: transparent; border: none; cursor: pointer; color: transparent; padding: 3px 4px; border-radius: 3px; transition: color .15s, background .15s; display: inline-flex; align-items: center; line-height: 0; }
 .item-table tbody tr:hover .row-del-btn { color: #d6cfc5; }
 .row-del-btn:hover { color: var(--danger) !important; background: #fee2e2; }
-.btn-add-row {
-  width: 100%; padding: 8px; font-family: inherit; font-size: 11px;
-  color: var(--ink3); background: transparent;
-  border: 1px dashed #d6cfc5; border-radius: var(--r); cursor: pointer;
-  transition: .15s; margin-bottom: 22px; letter-spacing: .5px;
-}
+.btn-add-row { width: 100%; padding: 8px; font-family: inherit; font-size: 11px; color: var(--ink3); background: transparent; border: 1px dashed #d6cfc5; border-radius: var(--r); cursor: pointer; transition: .15s; margin-bottom: 22px; letter-spacing: .5px; }
 .btn-add-row:hover { border-color: var(--t-acc, var(--acc)); color: var(--t-acc, var(--acc)); background: rgba(180,83,9,.04); }
 
 /* ========== SUMMARY ========== */
@@ -309,14 +281,11 @@ input[type="date"] { cursor: pointer; }
 .s-row.bordered { border-bottom: 1px dashed #ece9e2; }
 .s-val { font-family: monospace; }
 .s-total { margin-top: 8px; padding: 10px 14px; background: var(--t-head-bg, #1c1917); border-radius: var(--r); display: flex; justify-content: space-between; align-items: center; }
-.s-total-label { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,.45); }
-.s-total-val { font-size: 18px; font-weight: 700; color: var(--t-head-fg, white); font-family: monospace; }
+.s-total-label { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: #ffffff !important; opacity: 1 !important; font-weight: bold; }
+.s-total-val { font-size: 18px; font-weight: 700; color: #ffffff !important; font-family: monospace; opacity: 1 !important; }
 
 /* ========== BOTTOM WRAP (notes + summary side by side) ========== */
-.bottom-wrap {
-  display: flex; gap: 24px; align-items: flex-start;
-  margin-bottom: 22px; position: relative; z-index: 1;
-}
+.bottom-wrap { display: flex; gap: 24px; align-items: flex-start; margin-bottom: 22px; position: relative; z-index: 1; }
 .notes-side { flex: 2; }
 .notes-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--ink3); margin-bottom: 7px; }
 .notes-side textarea { font-size: 11px; line-height: 1.8; color: var(--ink2); min-height: 80px; }
@@ -324,24 +293,14 @@ input[type="date"] { cursor: pointer; }
 .summary-box { width: 100%; }
 
 /* ========== TABLE TOOLBAR ========== */
-.table-toolbar {
-  display: flex; align-items: center; gap: 7px;
-  margin-bottom: 8px; position: relative; z-index: 1;
-}
+.table-toolbar { display: flex; align-items: center; gap: 7px; margin-bottom: 8px; position: relative; z-index: 1; }
 .table-toolbar-label { font-size: 10px; color: var(--ink3); letter-spacing: 1px; text-transform: uppercase; }
-.col-toggle-btn {
-  padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 500;
-  border: 1px solid #d6cfc5; color: var(--ink3); background: none; cursor: pointer;
-  font-family: inherit; transition: .15s;
-}
+.col-toggle-btn { padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 500; border: 1px solid #d6cfc5; color: var(--ink3); background: none; cursor: pointer; font-family: inherit; transition: .15s; }
 .col-toggle-btn:hover { border-color: var(--t-acc,var(--acc)); color: var(--t-acc,var(--acc)); }
 .col-toggle-btn.on { background: rgba(180,83,9,.08); border-color: var(--t-acc,var(--acc)); color: var(--t-acc,var(--acc)); }
 
 /* ========== FOOTER (sign boxes) ========== */
-.doc-footer {
-  margin-top: 12px; padding-top: 18px; border-top: 1px solid #e7e3dc;
-  display: flex; gap: 30px; position: relative; z-index: 1;
-}
+.doc-footer { margin-top: 12px; padding-top: 18px; border-top: 1px solid #e7e3dc; display: flex; gap: 30px; position: relative; z-index: 1; }
 .sign-box { flex: 1; }
 .sign-box .sign-label { font-size: 10px; letter-spacing: 1px; color: var(--ink2); margin-bottom: 8px; display: block; }
 .sign-area { height: 56px; border-bottom: 1px solid var(--ink2); }
@@ -358,121 +317,52 @@ input[type="date"] { cursor: pointer; }
 /* ========================================
    CLIENT DB OVERLAY
 ======================================== */
-.overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,.6);
-  backdrop-filter: blur(5px); z-index: 500;
-  display: none; align-items: flex-start; justify-content: center;
-  padding-top: 70px;
-}
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); backdrop-filter: blur(5px); z-index: 500; display: none; align-items: flex-start; justify-content: center; padding-top: 70px; }
 .overlay.open { display: flex; }
-
-.db-panel {
-  background: #1c1917; color: #e7e5e4;
-  width: 660px; border-radius: 12px;
-  box-shadow: 0 32px 80px rgba(0,0,0,.55);
-  overflow: hidden; animation: sd .2s ease;
-  display: flex; flex-direction: column; max-height: calc(100vh - 100px);
-}
+.db-panel { background: #1c1917; color: #e7e5e4; width: 680px; border-radius: 12px; box-shadow: 0 32px 80px rgba(0,0,0,.55); overflow: hidden; animation: sd .2s ease; display: flex; flex-direction: column; max-height: calc(100vh - 100px); }
 @keyframes sd { from { transform: translateY(-18px); opacity:0; } to { transform:translateY(0); opacity:1; } }
-
-.db-head {
-  padding: 16px 22px; background: #0c0a09;
-  display: flex; justify-content: space-between; align-items: center;
-  border-bottom: 1px solid rgba(255,255,255,.07); flex-shrink: 0;
-}
+.db-head { padding: 16px 22px; background: #0c0a09; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,.07); flex-shrink: 0; }
 .db-head h2 { font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 8px; }
 .db-head-sub { font-size: 10px; letter-spacing: 2px; color: #57534e; text-transform: uppercase; }
 .db-head-actions { display: flex; gap: 7px; align-items: center; }
-
-.db-toolbar {
-  padding: 12px 20px; background: #141210;
-  display: flex; gap: 8px; align-items: center;
-  border-bottom: 1px solid rgba(255,255,255,.05); flex-shrink: 0;
-}
-.db-search-input {
-  flex: 1; background: rgba(255,255,255,.06) !important;
-  border: 1px solid rgba(255,255,255,.1) !important; border-style: solid !important;
-  color: #e7e5e4 !important; padding: 7px 11px !important; border-radius: 5px !important;
-  font-size: 12px;
-}
+.db-toolbar { padding: 12px 20px; background: #141210; display: flex; gap: 8px; align-items: center; border-bottom: 1px solid rgba(255,255,255,.05); flex-shrink: 0; }
+.db-search-input { flex: 1; background: rgba(255,255,255,.06) !important; border: 1px solid rgba(255,255,255,.1) !important; border-style: solid !important; color: #e7e5e4 !important; padding: 7px 11px !important; border-radius: 5px !important; font-size: 12px; }
 .db-search-input::placeholder { color: #57534e; }
 .db-search-input:focus { border-color: var(--acc) !important; background: rgba(255,255,255,.09) !important; box-shadow: 0 0 0 2px rgba(180,83,9,.2) !important; }
-
-/* Import area */
-.import-zone {
-  padding: 10px 20px;
-  background: rgba(5,150,105,.06);
-  border-bottom: 1px solid rgba(5,150,105,.15);
-  display: flex; align-items: center; gap: 10px; flex-shrink: 0;
-}
+.import-zone { padding: 10px 20px; background: rgba(5,150,105,.06); border-bottom: 1px solid rgba(5,150,105,.15); display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 .import-zone-icon { font-size: 18px; }
 .import-zone-text { flex: 1; }
 .import-zone-title { font-size: 12px; font-weight: 500; color: #6ee7b7; margin-bottom: 1px; }
 .import-zone-desc { font-size: 10px; color: #57534e; }
-.import-drop {
-  border: 1.5px dashed rgba(52,211,153,.3); border-radius: 6px;
-  padding: 6px 12px; font-size: 11px; color: #34d399;
-  cursor: pointer; transition: .15s; background: rgba(52,211,153,.06);
-  font-family: inherit; white-space: nowrap;
-}
+.import-drop { border: 1.5px dashed rgba(52,211,153,.3); border-radius: 6px; padding: 6px 12px; font-size: 11px; color: #34d399; cursor: pointer; transition: .15s; background: rgba(52,211,153,.06); font-family: inherit; white-space: nowrap; }
 .import-drop:hover { border-color: #34d399; background: rgba(52,211,153,.12); }
 #xl-input { display: none; }
-
-/* Template download */
 .dl-tpl { font-size: 10px; color: #57534e; cursor: pointer; white-space: nowrap; }
 .dl-tpl:hover { color: #a8a29e; }
-
 .db-list { flex: 1; overflow-y: auto; }
 .db-empty { padding: 36px; text-align: center; color: #57534e; font-size: 13px; line-height: 1.7; }
-.db-card {
-  padding: 12px 20px; border-bottom: 1px solid rgba(255,255,255,.05);
-  display: flex; justify-content: space-between; align-items: center;
-  transition: .12s;
-}
+.db-card { padding: 14px 20px; border-bottom: 1px solid rgba(255,255,255,.05); display: flex; justify-content: space-between; align-items: flex-start; transition: .12s; }
 .db-card:hover { background: rgba(255,255,255,.04); }
-.db-card-info { flex: 1; cursor: pointer; }
-.db-card-name { font-size: 13px; font-weight: 500; color: #fafaf9; margin-bottom: 2px; }
-.db-card-sub { font-size: 10px; color: #78716c; }
-.db-card-actions { display: flex; gap: 6px; }
-
-.db-foot {
-  padding: 12px 20px; background: #141210;
-  border-top: 1px solid rgba(255,255,255,.05);
-  display: flex; justify-content: space-between; align-items: center;
-  flex-shrink: 0;
-}
+.db-card-info { flex: 1; cursor: pointer; padding-right: 15px; }
+.db-card-name { font-size: 14px; font-weight: 600; color: #fafaf9; margin-bottom: 2px; display: flex; align-items: center; gap: 10px; }
+.db-card-sub { font-size: 11px; color: #78716c; line-height: 1.5; margin-top: 4px; }
+.db-card-actions { display: flex; gap: 6px; flex-shrink: 0; align-items: flex-start; }
+.db-foot { padding: 12px 20px; background: #141210; border-top: 1px solid rgba(255,255,255,.05); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
 .db-count { font-size: 11px; color: #57534e; }
-
-/* Import progress */
-.import-msg {
-  padding: 8px 20px; font-size: 11px; text-align: center;
-  display: none; flex-shrink: 0;
-}
+.import-msg { padding: 8px 20px; font-size: 11px; text-align: center; display: none; flex-shrink: 0; }
 .import-msg.success { background: rgba(5,150,105,.1); color: #34d399; display: block; }
 .import-msg.error { background: rgba(220,38,38,.1); color: #fca5a5; display: block; }
 
 /* ========================================
    SAVE MODAL
 ======================================== */
-.save-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,.6);
-  backdrop-filter: blur(5px); z-index: 600;
-  display: none; align-items: center; justify-content: center;
-}
+.save-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); backdrop-filter: blur(5px); z-index: 600; display: none; align-items: center; justify-content: center; }
 .save-overlay.open { display: flex; }
-.save-box {
-  background: #1c1917; color: #e7e5e4;
-  width: 360px; border-radius: 10px; padding: 24px;
-  box-shadow: 0 24px 60px rgba(0,0,0,.55); animation: sd .15s ease;
-}
+.save-box { background: #1c1917; color: #e7e5e4; width: 360px; border-radius: 10px; padding: 24px; box-shadow: 0 24px 60px rgba(0,0,0,.55); animation: sd .15s ease; }
 .save-box h3 { font-size: 14px; font-weight: 600; margin-bottom: 16px; }
 .sf { margin-bottom: 11px; }
 .sf label { display: block; font-size: 10px; color: #78716c; margin-bottom: 4px; letter-spacing: .5px; }
-.sf input {
-  background: rgba(255,255,255,.07) !important; border: 1px solid rgba(255,255,255,.12) !important;
-  border-style: solid !important; color: #e7e5e4 !important;
-  padding: 7px 10px !important; border-radius: 5px !important; font-size: 13px; width: 100%;
-}
+.sf input { background: rgba(255,255,255,.07) !important; border: 1px solid rgba(255,255,255,.12) !important; border-style: solid !important; color: #e7e5e4 !important; padding: 7px 10px !important; border-radius: 5px !important; font-size: 13px; width: 100%; }
 .sf input:focus { border-color: var(--acc) !important; background: rgba(255,255,255,.1) !important; box-shadow: 0 0 0 2px rgba(180,83,9,.2) !important; }
 .save-actions { display: flex; gap: 8px; margin-top: 18px; justify-content: flex-end; }
 
@@ -483,79 +373,32 @@ input[type="date"] { cursor: pointer; }
 .sp-val { font-size:11px; color:#e7e5e4; width:38px; text-align:right; font-family:monospace; flex-shrink:0; }
 
 /* ========== CUSTOM COL CHIP ========== */
-.custom-col-chip {
-  display:inline-flex; align-items:center; gap:5px;
-  padding:2px 8px; border-radius:12px; font-size:10px;
-  background:rgba(180,83,9,.12); border:1px solid rgba(180,83,9,.35);
-  color:var(--t-acc,var(--acc)); cursor:default;
-}
+.custom-col-chip { display:inline-flex; align-items:center; gap:5px; padding:2px 8px; border-radius:12px; font-size:10px; background:rgba(180,83,9,.12); border:1px solid rgba(180,83,9,.35); color:var(--t-acc,var(--acc)); cursor:default; }
 .custom-col-chip-del { cursor:pointer; opacity:.6; font-size:11px; }
 .custom-col-chip-del:hover { opacity:1; color:var(--danger); }
 
 /* ========== FIELD STYLE OVERLAY ========== */
-.field-style-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,.55);
-  backdrop-filter: blur(5px); z-index: 700;
-  display: none; align-items: flex-start; justify-content: center;
-  padding-top: 80px;
-}
+.field-style-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.55); backdrop-filter: blur(5px); z-index: 700; display: none; align-items: flex-start; justify-content: center; padding-top: 80px; }
 .field-style-overlay.open { display: flex; }
-.fs-panel {
-  background: #1c1917; color: #e7e5e4;
-  width: 500px; border-radius: 10px;
-  box-shadow: 0 32px 80px rgba(0,0,0,.55);
-  overflow: hidden; animation: sd .18s ease;
-}
-.fs-head {
-  padding: 14px 20px; background: #0c0a09;
-  display: flex; justify-content: space-between; align-items: center;
-  border-bottom: 1px solid rgba(255,255,255,.07);
-}
+.fs-panel { background: #1c1917; color: #e7e5e4; width: 500px; border-radius: 10px; box-shadow: 0 32px 80px rgba(0,0,0,.55); overflow: hidden; animation: sd .18s ease; }
+.fs-head { padding: 14px 20px; background: #0c0a09; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,.07); }
 .fs-head h3 { font-size: 13px; font-weight: 500; }
 .fs-body { padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; }
 .fs-row { display: flex; align-items: center; gap: 10px; }
 .fs-target-label { font-size: 11px; color: #a8a29e; width: 100px; flex-shrink: 0; }
-.fs-row select { 
-  background: rgba(255,255,255,.07); color: #e7e5e4;
-  border: 1px solid rgba(255,255,255,.12); border-radius: 4px;
-  padding: 4px 8px; font-size: 11px; font-family: inherit; cursor: pointer;
-}
+.fs-row select { background: rgba(255,255,255,.07); color: #e7e5e4; border: 1px solid rgba(255,255,255,.12); border-radius: 4px; padding: 4px 8px; font-size: 11px; font-family: inherit; cursor: pointer; }
 .fs-row select:focus { outline: none; border-color: var(--acc); }
 .fs-divider { height: 1px; background: rgba(255,255,255,.06); margin: 4px 0; }
 
 /* ========== INLINE FIELD STYLE TOOLBAR ========== */
-#inline-toolbar {
-  position: fixed;
-  z-index: 800;
-  background: #0c0a09;
-  border: 1px solid rgba(255,255,255,.15);
-  border-radius: 8px;
-  box-shadow: 0 8px 32px rgba(0,0,0,.55);
-  display: none;
-  align-items: center;
-  gap: 2px;
-  padding: 4px 6px;
-  pointer-events: auto;
-  animation: itb .12s ease;
-  white-space: nowrap;
-}
+#inline-toolbar { position: fixed; z-index: 800; background: #0c0a09; border: 1px solid rgba(255,255,255,.15); border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,.55); display: none; align-items: center; gap: 2px; padding: 4px 6px; pointer-events: auto; animation: itb .12s ease; white-space: nowrap; }
 @keyframes itb { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:translateY(0); } }
 #inline-toolbar.visible { display: flex; }
 .itb-sep { width: 1px; height: 18px; background: rgba(255,255,255,.1); margin: 0 3px; flex-shrink:0; }
 .itb-label { font-size: 9px; color: #57534e; letter-spacing: .5px; text-transform: uppercase; padding: 0 3px; }
-.itb-select {
-  background: rgba(255,255,255,.07); color: #d6d3d1;
-  border: 1px solid rgba(255,255,255,.1); border-radius: 4px;
-  padding: 2px 5px; font-size: 10px; cursor: pointer; font-family: inherit;
-  max-width: 110px;
-}
+.itb-select { background: rgba(255,255,255,.07); color: #d6d3d1; border: 1px solid rgba(255,255,255,.1); border-radius: 4px; padding: 2px 5px; font-size: 10px; cursor: pointer; font-family: inherit; max-width: 110px; }
 .itb-select:focus { outline: none; border-color: var(--acc); }
-.itb-btn {
-  background: rgba(255,255,255,.06); color: #a8a29e;
-  border: 1px solid rgba(255,255,255,.08); border-radius: 4px;
-  padding: 2px 6px; font-size: 10px; cursor: pointer; font-family: inherit;
-  transition: .12s; line-height: 1.4;
-}
+.itb-btn { background: rgba(255,255,255,.06); color: #a8a29e; border: 1px solid rgba(255,255,255,.08); border-radius: 4px; padding: 2px 6px; font-size: 10px; cursor: pointer; font-family: inherit; transition: .12s; line-height: 1.4; }
 .itb-btn:hover { background: rgba(255,255,255,.14); color: #fafaf9; }
 .itb-btn.on { background: rgba(180,83,9,.18); border-color: var(--acc); color: var(--acc2); }
 .itb-color { width: 18px; height: 18px; border-radius: 3px; border: 1px solid rgba(255,255,255,.2); cursor: pointer; padding: 0; background: none; }
@@ -565,117 +408,47 @@ input[type="date"] { cursor: pointer; }
 
 /* ========== TABLE COLUMN DRAG/RESIZE ========== */
 .item-table th { position: relative; user-select: none; }
-
-/* Resize handle – visible stripe on right edge */
-.col-resize-handle {
-  position: absolute; right: 0; top: 10%; bottom: 10%;
-  width: 4px; cursor: col-resize;
-  background: rgba(255,255,255,.18);
-  border-radius: 2px;
-  transition: background .15s, width .15s;
-  z-index: 2;
-}
+.col-resize-handle { position: absolute; right: 0; top: 10%; bottom: 10%; width: 4px; cursor: col-resize; background: rgba(255,255,255,.18); border-radius: 2px; transition: background .15s, width .15s; z-index: 2; }
 .col-resize-handle:hover { background: var(--acc2); width: 5px; }
 .col-resize-handle.dragging { background: var(--acc2); width: 5px; }
-
-/* Drag handle indicator – dots on left of th text */
-.drag-dot {
-  position: absolute; left: 5px; top: 50%; transform: translateY(-50%);
-  font-size: 10px; color: rgba(255,255,255,.3);
-  line-height: 1; pointer-events: none;
-  transition: color .15s; user-select: none;
-}
+.drag-dot { position: absolute; left: 5px; top: 50%; transform: translateY(-50%); font-size: 10px; color: rgba(255,255,255,.3); line-height: 1; pointer-events: none; transition: color .15s; user-select: none; }
 .item-table th[draggable="true"]:hover .drag-dot { color: rgba(255,255,255,.75); }
 .item-table th[draggable="true"] { cursor: grab; padding-left: 18px !important; }
 .item-table th[draggable="true"]:active { cursor: grabbing; }
-
-/* Drop target highlight */
-.item-table th.drag-over {
-  background: rgba(180,83,9,.25) !important;
-  outline: 2px dashed var(--acc2);
-  outline-offset: -2px;
-}
-
-/* Source column being dragged */
+.item-table th.drag-over { background: rgba(180,83,9,.25) !important; outline: 2px dashed var(--acc2); outline-offset: -2px; }
 .item-table th.dragging-col { opacity: .35; background: rgba(255,255,255,.04) !important; }
-
-.col-order-hint {
-  font-size: 9px; color: #57534e; letter-spacing: .5px;
-  padding: 0 4px; white-space: nowrap;
-}
-
-/* Editable th inputs */
-.th-input {
-  background: transparent; border: none; color: inherit;
-  font-size: inherit; font-weight: inherit; letter-spacing: inherit;
-  text-transform: inherit; font-family: inherit;
-  padding: 0; margin: 0; width: 100%; outline: none;
-  cursor: text;
-  text-align: inherit;
-}
+.col-order-hint { font-size: 9px; color: #57534e; letter-spacing: .5px; padding: 0 4px; white-space: nowrap; }
+.th-input { background: transparent; border: none; color: inherit; font-size: inherit; font-weight: inherit; letter-spacing: inherit; text-transform: inherit; font-family: inherit; padding: 0; margin: 0; width: 100%; outline: none; cursor: text; text-align: inherit; }
 .th-input:hover { background: rgba(255,255,255,.08); border-radius: 3px; }
 .th-input:focus { background: rgba(255,255,255,.12); border-radius: 3px; box-shadow: 0 0 0 2px rgba(180,83,9,.5); }
 .th-input::placeholder { color: rgba(255,255,255,.25); font-weight: 400; text-transform: none; letter-spacing: 0; }
+
 @media print {
   @page { size: A4; margin: 0; }
   body { background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .topbar, .toolbar, .btn-add-row, .th-del, .td-del, .td-del-float, .row-del-btn, .overlay, .save-overlay, .field-style-overlay, .table-toolbar, #inline-toolbar, .col-resize-handle, .drag-dot { display: none !important; }
+  .topbar, .toolbar, .btn-add-row, .th-del, .td-del, .td-del-float, .row-del-btn, .overlay, .save-overlay, .field-style-overlay, .table-toolbar, #inline-toolbar, .col-resize-handle, .drag-dot, .logo-resize-handle { display: none !important; }
   .canvas { padding: 0; display: block; }
   .paper { box-shadow: none; width: 210mm; min-height: 297mm; padding: 12mm 16mm; margin: 0; }
   input, textarea { border: none !important; background: transparent !important; box-shadow: none !important; resize: none; }
   input::placeholder, textarea::placeholder { color: transparent; }
-  .meta-item input, .meta-item input:focus { color: var(--t-head-fg, white) !important; background: transparent !important; }
+  .meta-item input, .meta-item input:focus { color: #ffffff !important; background: transparent !important; }
   textarea { overflow: visible !important; white-space: pre-wrap !important; }
-  .td-name textarea { 
-    min-height: unset !important; 
-    white-space: pre-wrap !important; 
-    overflow: visible !important;
-    display: block !important;
-    width: 100% !important;
-  }
-  /* 列印時用替代 div 顯示，textarea 隱藏 */
+  .td-name textarea { min-height: unset !important; white-space: pre-wrap !important; overflow: visible !important; display: block !important; width: 100% !important; }
   .item-table textarea { display: none !important; }
-  .print-cell-text {
-    display: block !important;
-    white-space: pre-wrap !important;
-    word-break: break-word !important;
-    font-size: inherit !important;
-    font-family: inherit !important;
-    line-height: inherit !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    width: 100% !important;
-    height: auto !important;
-    text-align: left;
-  }
+  .print-cell-text { display: block !important; white-space: pre-wrap !important; word-break: break-word !important; font-size: inherit !important; font-family: inherit !important; line-height: inherit !important; padding: 0 !important; margin: 0 !important; width: 100% !important; height: auto !important; text-align: left; }
   .item-table td input, .item-table td textarea { text-align: center !important; }
   .item-table td.td-name input, .item-table td.td-name textarea { text-align: left !important; }
   .item-table td.td-price input { text-align: right !important; }
   .item-table td.td-amt { text-align: right !important; }
-  .item-table td { 
-    vertical-align: top !important; 
-    padding-top: 4px !important; 
-    padding-bottom: 4px !important;
-    height: auto !important;
-    overflow: visible !important;
-  }
-  .item-table td input { 
-    white-space: pre-wrap !important; 
-    word-break: break-word !important;
-    overflow: visible !important;
-  }
+  .item-table td { vertical-align: top !important; padding-top: 4px !important; padding-bottom: 4px !important; height: auto !important; overflow: visible !important; }
+  .item-table td input { white-space: pre-wrap !important; word-break: break-word !important; overflow: visible !important; }
   .item-table { table-layout: fixed !important; width: 100% !important; }
-  .item-table th, .item-table td { 
-    word-wrap: break-word !important; 
-    overflow-wrap: break-word !important; 
-    overflow: visible !important;
-  }
+  .item-table th, .item-table td { word-wrap: break-word !important; overflow-wrap: break-word !important; overflow: visible !important; }
   .item-table tbody tr { page-break-inside: avoid; height: auto !important; }
   .sign-size-row { display: none !important; }
   .sign-images img { border: none !important; background: transparent !important; }
   .sign-upload-btn { display: none !important; }
   #meta-toggle-bar { display: none !important; }
-  /* meta-strip visibility in print is controlled by JS beforeprint/afterprint */
   .sign-img-del { display: none !important; }
   .logo-hint { display: none !important; }
   .logo-clear { display: none !important; }
@@ -686,7 +459,6 @@ input[type="date"] { cursor: pointer; }
   .info-col-client { border-color: #ccc !important; }
   .sign-area { height: 56px; border-bottom: 1px solid #333; }
   .th-input { pointer-events: none; padding-left: 0 !important; }
-  /* 浮水印在列印時保留 */
   #wm-layer { display: block !important; pointer-events: none !important; }
   #wm-layer[style*="display: none"] { display: none !important; }
 }
@@ -843,12 +615,15 @@ input[type="date"] { cursor: pointer; }
         <div class="doc-sub">Quotation</div>
       </div>
       <div class="banner-logo-area">
-        <div class="logo-box no-logo" id="logo-box" onclick="document.getElementById('logo-input').click()" title="點擊上傳 LOGO（最大 2MB）">
-          <div class="logo-hint" id="logo-hint">
+        <div class="logo-box no-logo" id="logo-box" title="點擊上傳 LOGO（最大 2MB），右下角可拖拉調整大小">
+          <div class="logo-hint" id="logo-hint" onclick="document.getElementById('logo-input').click()" style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
             上傳 LOGO
           </div>
-          <img id="logo-img" src="" alt="">
+          <img id="logo-img" src="" alt="" onclick="document.getElementById('logo-input').click()" style="width:100%;height:100%;object-fit:contain;display:none;cursor:pointer;">
+          <div class="logo-resize-handle" id="logo-resize-handle" title="拖拉縮放大小">
+            <svg width="8" height="8" viewBox="0 0 8 8" fill="white"><path d="M1 7L7 1M4 7L7 4M7 7L7 7" stroke="white" stroke-width="1.2" stroke-linecap="round"/></svg>
+          </div>
         </div>
         <span class="logo-clear" id="logo-clear" onclick="clearLogo()">✕ 移除</span>
         <input type="file" id="logo-input" accept="image/*" onchange="handleLogo(event)">
@@ -857,7 +632,6 @@ input[type="date"] { cursor: pointer; }
 
     <!-- ② INFO BLOCK: 報價對象 | 報價方 -->
     <div class="info-block">
-
       <!-- LEFT: 報價對象 -->
       <div class="info-col info-col-client">
         <div class="info-col-eyebrow">
@@ -891,7 +665,6 @@ input[type="date"] { cursor: pointer; }
           <div class="f-row" style="grid-column:span 2"><span class="f-lbl">地址</span><input type="text" class="f-inp" id="my-addr" placeholder="選填"></div>
         </div>
       </div>
-
     </div>
 
     <!-- ③ META STRIP - hidden by default, toggled from topbar button -->
@@ -900,6 +673,7 @@ input[type="date"] { cursor: pointer; }
     <!-- ④ ITEM TABLE -->
     <div class="table-toolbar">
       <span class="table-toolbar-label">表格欄位</span>
+      <button class="col-toggle-btn" id="col-toggle-unit" onclick="toggleCol('unit',this)">+ 單位欄</button>
       <button class="col-toggle-btn" id="col-toggle-remark" onclick="toggleCol('remark',this)">+ 備註欄</button>
       <button class="col-toggle-btn" id="col-toggle-discount" onclick="toggleCol('discount',this)">+ 折扣欄</button>
       <button class="col-toggle-btn" onclick="openAddCol()">＋ 自訂欄位</button>
@@ -911,7 +685,7 @@ input[type="date"] { cursor: pointer; }
         <th class="th-no">#</th>
         <th class="th-name" draggable="true"><input class="th-input" placeholder="項目名稱 ／ 規格說明" value="項目名稱 ／ 規格說明" data-default="項目名稱 ／ 規格說明"></th>
         <th class="th-qty" style="text-align:center" draggable="true"><input class="th-input" style="text-align:center" placeholder="數量" value="數量" data-default="數量"></th>
-        <th class="th-unit" style="text-align:center" draggable="true"><input class="th-input" style="text-align:center" placeholder="單位" value="單位" data-default="單位"></th>
+        <th class="th-unit col-unit" style="text-align:center;display:none" draggable="true"><input class="th-input" style="text-align:center" placeholder="單位" value="單位" data-default="單位"></th>
         <th class="th-price" style="text-align:right" draggable="true"><input class="th-input" style="text-align:right" placeholder="單價" value="單價" data-default="單價"></th>
         <th class="th-discount col-discount" style="text-align:center;display:none" draggable="true"><input class="th-input" style="text-align:center" placeholder="折扣" value="折扣" data-default="折扣"></th>
         <th class="th-amt" style="text-align:right" draggable="true"><input class="th-input" style="text-align:right" placeholder="小計" value="小計" data-default="小計"></th>
@@ -941,19 +715,19 @@ input[type="date"] { cursor: pointer; }
 
     <!-- ⑥ FOOTER: sign boxes -->
     <div class="doc-footer" id="doc-footer">
-      <div class="sign-box" id="sign-box-vendor">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
-          <span class="sign-label" style="margin-bottom:0">公司蓋章 ／ 負責人簽名</span>
-          <button class="sign-upload-btn" onclick="addSignImage('vendor')" style="font-size:9px;padding:2px 7px;background:rgba(180,83,9,.08);border:1px solid rgba(180,83,9,.3);color:var(--t-acc,var(--acc));border-radius:3px;cursor:pointer;font-family:inherit;white-space:nowrap">＋ 上傳圖章</button>
-        </div>
-        <div class="sign-images" id="sign-images-vendor" style="display:flex;flex-wrap:wrap;gap:8px;min-height:56px;border-bottom:1px solid var(--ink2);padding-bottom:4px;align-items:flex-end"></div>
-      </div>
       <div class="sign-box" id="sign-box-client">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
           <span class="sign-label" style="margin-bottom:0">客戶確認簽章</span>
           <button class="sign-upload-btn" onclick="addSignImage('client')" style="font-size:9px;padding:2px 7px;background:rgba(180,83,9,.08);border:1px solid rgba(180,83,9,.3);color:var(--t-acc,var(--acc));border-radius:3px;cursor:pointer;font-family:inherit;white-space:nowrap">＋ 上傳圖章</button>
         </div>
         <div class="sign-images" id="sign-images-client" style="display:flex;flex-wrap:wrap;gap:8px;min-height:56px;border-bottom:1px solid var(--ink2);padding-bottom:4px;align-items:flex-end"></div>
+      </div>
+      <div class="sign-box" id="sign-box-vendor">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+          <span class="sign-label" style="margin-bottom:0">公司蓋章 ／ 負責人簽名</span>
+          <button class="sign-upload-btn" onclick="addSignImage('vendor')" style="font-size:9px;padding:2px 7px;background:rgba(180,83,9,.08);border:1px solid rgba(180,83,9,.3);color:var(--t-acc,var(--acc));border-radius:3px;cursor:pointer;font-family:inherit;white-space:nowrap">＋ 上傳圖章</button>
+        </div>
+        <div class="sign-images" id="sign-images-vendor" style="display:flex;flex-wrap:wrap;gap:8px;min-height:56px;border-bottom:1px solid var(--ink2);padding-bottom:4px;align-items:flex-end"></div>
       </div>
     </div>
 
@@ -1115,7 +889,6 @@ input[type="date"] { cursor: pointer; }
       <button class="btn btn-ghost btn-sm" onclick="closeFieldStyle()">✕</button>
     </div>
     <div class="fs-body">
-      <!-- Quick presets -->
       <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px">
         <span style="font-size:10px;color:#78716c;align-self:center">快速選取：</span>
         <button class="col-toggle-btn" style="font-size:10px" onclick="$('fs-target').value='.doc-title-text';this.parentNode.querySelectorAll('button').forEach(b=>b.classList.remove('on'));this.classList.add('on')">報價單標題</button>
@@ -1224,7 +997,6 @@ input[type="date"] { cursor: pointer; }
 <!-- ====== CLIENT DB OVERLAY ====== -->
 <div class="overlay" id="db-overlay" onclick="closeDBifBg(event)">
   <div class="db-panel">
-
     <div class="db-head">
       <h2>
         <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/></svg>
@@ -1268,7 +1040,6 @@ input[type="date"] { cursor: pointer; }
         <button class="btn btn-red btn-sm" onclick="clearDB()">清空全部</button>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -1276,6 +1047,7 @@ input[type="date"] { cursor: pointer; }
 <div class="save-overlay" id="save-overlay" onclick="closeSaveIfBg(event)">
   <div class="save-box">
     <h3>💾 儲存客戶資料</h3>
+    <input type="hidden" id="sv-id">
     <div class="sf"><label>客戶名稱（必填）</label><input type="text" id="sv-name" placeholder="王大明 先生"></div>
     <div class="sf"><label>統一編號</label><input type="text" id="sv-taxid"></div>
     <div class="sf"><label>聯絡人</label><input type="text" id="sv-contact"></div>
@@ -1335,6 +1107,7 @@ input[type="date"] { cursor: pointer; }
 <div class="save-overlay" id="vsave-overlay" onclick="closeVSaveIfBg(event)">
   <div class="save-box">
     <h3>💾 儲存報價方資料</h3>
+    <input type="hidden" id="vsv-id">
     <div class="sf"><label>公司名稱（必填）</label><input type="text" id="vsv-name" placeholder="數位設計科技有限公司"></div>
     <div class="sf"><label>統一編號</label><input type="text" id="vsv-taxid"></div>
     <div class="sf"><label>聯絡人</label><input type="text" id="vsv-contact"></div>
@@ -1389,27 +1162,45 @@ let items = [];
 let taxMode = 'included';
 let clientDB = [];
 let vendorDB = [];
+let colState = { unit: false, remark: false, discount: false };
 
 /* ===== Init ===== */
 window.onload = async () => {
-  // 1. 畫面瞬間先載入範例與 UI
   loadSample();
 
-  // 2. 顯示背景連線提示
   const loadingEl = document.createElement('div');
   loadingEl.id = 'fb-loading';
   loadingEl.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:9999;background:#1c1917;color:#e7e5e4;text-align:center;padding:8px 20px;font-size:12px;font-family:sans-serif;border-radius:20px;box-shadow:0 4px 16px rgba(0,0,0,.35);pointer-events:none;';
   loadingEl.textContent = '☁️ 背景正在同步雲端資料庫…';
   document.body.appendChild(loadingEl);
 
-  // 3. 等待 Firebase 初始化
+  // 初始化 LOGO 拖拉調整大小的功能
+  const lb = document.getElementById('logo-box');
+  const lrh = document.getElementById('logo-resize-handle');
+  if(lrh && lb) {
+    lrh.addEventListener('mousedown', function(e) {
+      e.preventDefault(); e.stopPropagation();
+      const startX = e.clientX; const startY = e.clientY;
+      const startW = lb.offsetWidth; const startH = lb.offsetHeight;
+      function onMove(ev) {
+        lb.style.width = Math.max(60, startW + ev.clientX - startX) + 'px';
+        lb.style.height = Math.max(30, startH + ev.clientY - startY) + 'px';
+      }
+      function onUp() {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+      }
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    });
+  }
+
   let waited = 0;
   while (!window._fbDb && waited < 5000) {
     await new Promise(r => setTimeout(r, 100));
     waited += 100;
   }
 
-  // 4. 下載資料並更新 UI
   try {
     await Promise.all([loadDBFromStorage(), loadVendorDBFromStorage()]);
     loadingEl.style.background = '#059669';
@@ -1463,6 +1254,7 @@ window.addEventListener('afterprint', () => {
   const ms = $('meta-strip');
   if(ms) ms.style.display = metaOpen ? 'flex' : 'none';
 });
+
 /* ===== Helpers ===== */
 const $ = id => document.getElementById(id);
 const fmt = n => Number(n).toLocaleString('en-US');
@@ -1685,6 +1477,9 @@ function clearLogo(){
   $('logo-hint').style.display=''; $('logo-clear').style.display='none';
   $('logo-input').value='';
   $('logo-box').classList.add('no-logo');
+  // 重置大小
+  $('logo-box').style.width = '140px';
+  $('logo-box').style.height = '70px';
 }
 
 /* ===== Spacing overlay ===== */
@@ -1751,11 +1546,16 @@ function renderCustomColChips(){
 }
 
 /* ===== Column toggles ===== */
-let colState = { remark: false, discount: false };
 function toggleCol(col, btn) {
   colState[col] = !colState[col];
   btn.classList.toggle('on', colState[col]);
-  btn.textContent = (colState[col] ? '− ' : '+ ') + (col === 'remark' ? '備註欄' : '折扣欄');
+  
+  let label = '';
+  if(col === 'unit') label = '單位欄';
+  if(col === 'remark') label = '備註欄';
+  if(col === 'discount') label = '折扣欄';
+  btn.textContent = (colState[col] ? '− ' : '+ ') + label;
+  
   document.querySelectorAll('.col-' + col).forEach(el => {
     el.style.display = colState[col] ? '' : 'none';
   });
@@ -1822,7 +1622,7 @@ function renderTable(){
       <td class="td-no">${i+1}</td>
       <td class="td-name"><textarea rows="1" oninput="upd(${it.id},'name',this.value);ar(this)" placeholder="項目名稱／規格">${it.name}</textarea></td>
       <td><input type="number" min="0" value="${it.qty}" oninput="upd(${it.id},'qty',this.value)" style="text-align:center"></td>
-      <td><input type="text" value="${it.unit}" placeholder="式" oninput="upd(${it.id},'unit',this.value)" style="text-align:center"></td>
+      <td class="col-unit" style="display:${colState.unit?'':'none'}"><input type="text" value="${it.unit}" placeholder="式" oninput="upd(${it.id},'unit',this.value)" style="text-align:center"></td>
       <td class="td-price"><input type="number" min="0" value="${it.price}" oninput="upd(${it.id},'price',this.value)" style="text-align:right"></td>
       <td class="col-discount" style="display:${colState.discount?'':'none'}"><input type="text" value="${it.discount||''}" placeholder="0%" oninput="upd(${it.id},'discount',this.value)" style="text-align:center"></td>
       <td class="td-amt" id="a-${it.id}">${fmt(calcAmt(it))}</td>
@@ -1887,6 +1687,39 @@ function recalc(){
 
 /* ===== Sample / Clear ===== */
 function loadSample(){
+  // 1. 重置開關按鈕與顯示狀態
+  colState = { unit: false, remark: false, discount: false };
+  document.querySelectorAll('.col-unit, .col-remark, .col-discount').forEach(el => el.style.display = 'none');
+  
+  const btnU = document.getElementById('col-toggle-unit');
+  if(btnU) { btnU.classList.remove('on'); btnU.textContent = '+ 單位欄'; }
+  const btnR = document.getElementById('col-toggle-remark');
+  if(btnR) { btnR.classList.remove('on'); btnR.textContent = '+ 備註欄'; }
+  const btnD = document.getElementById('col-toggle-discount');
+  if(btnD) { btnD.classList.remove('on'); btnD.textContent = '+ 折扣欄'; }
+
+  // 2. 清空自訂欄位
+  customCols = [];
+  renderCustomColChips();
+
+  // 3. 還原表頭順序與寬度
+  colOrder = COL_DEFS.map(c => c.key);
+  COL_DEFS.forEach(c => colWidths[c.key] = c.defaultW);
+  const thead = document.getElementById('thead-row');
+  if(thead) {
+    colOrder.forEach(key => {
+      const def = COL_DEFS.find(c => c.key === key);
+      if(def) {
+        const th = thead.querySelector(`.${def.thClass}`);
+        if(th) {
+          th.style.width = def.defaultW;
+          thead.appendChild(th);
+        }
+      }
+    });
+  }
+
+  // 4. 載入範例資料
   items=[
     {id:1,name:'企業官方網站設計與開發\n— RWD 響應式設計，含首頁、關於、服務、聯絡表單',qty:1,unit:'式',price:45000},
     {id:2,name:'後台內容管理系統 (CMS)\n— 提供客戶自行更新最新消息與產品資訊',qty:1,unit:'式',price:25000},
@@ -1901,12 +1734,23 @@ function loadSample(){
   $('my-addr').value='台北市信義區信義路五段7號';
   renderTable();
 }
+
 function clearAll(){
   if(!confirm('確定清空所有資料？')) return;
+  colState = { unit: false, remark: false, discount: false };
   items=[{id:Date.now(),name:'',qty:1,unit:'式',price:0}];
   ['c-name','c-taxid','c-contact','c-tel','c-mobile','c-email','c-addr'].forEach(id=>$(id).value='');
   ['my-name','my-taxid','my-contact','my-tel','my-mobile','my-email','my-addr'].forEach(id=>$(id).value='');
   if($('q-no')) genNo();
+  
+  // 更新按鈕UI
+  const btnU = document.getElementById('col-toggle-unit');
+  if(btnU) { btnU.classList.remove('on'); btnU.textContent = '+ 單位欄'; }
+  const btnR = document.getElementById('col-toggle-remark');
+  if(btnR) { btnR.classList.remove('on'); btnR.textContent = '+ 備註欄'; }
+  const btnD = document.getElementById('col-toggle-discount');
+  if(btnD) { btnD.classList.remove('on'); btnD.textContent = '+ 折扣欄'; }
+
   renderTable();
 }
 
@@ -2045,7 +1889,7 @@ const COL_DEFS = [
   { key: 'no',       label: '#',             thClass: 'th-no',       fixed: true,  defaultW: '4%'  },
   { key: 'name',     label: '項目名稱',       thClass: 'th-name',     fixed: false, defaultW: '43%' },
   { key: 'qty',      label: '數量',           thClass: 'th-qty',      fixed: false, defaultW: '9%'  },
-  { key: 'unit',     label: '單位',           thClass: 'th-unit',     fixed: false, defaultW: '9%'  },
+  { key: 'unit',     label: '單位',           thClass: 'th-unit',     fixed: false, defaultW: '9%', toggleKey: 'unit' },
   { key: 'price',    label: '單價',           thClass: 'th-price',    fixed: false, defaultW: '14%' },
   { key: 'discount', label: '折扣',           thClass: 'th-discount', fixed: false, defaultW: '9%', toggleKey: 'discount' },
   { key: 'amt',      label: '小計',           thClass: 'th-amt',      fixed: false, defaultW: '14%' },
@@ -2232,6 +2076,30 @@ window.addEventListener('load', () => {
 });
 
 /* ===========================
+   DB RENDER HELPERS
+=========================== */
+function renderSubText(v) {
+  let html = '';
+  if(v.taxid) html += '統編: '+esc(v.taxid)+'　';
+  if(v.tel) html += '☎ '+esc(v.tel)+'　';
+  if(v.mobile) html += '📱 '+esc(v.mobile)+'　';
+  if(v.email) html += '✉ '+esc(v.email);
+  if(v.addr) html += '<br>📍 '+esc(v.addr);
+  return html;
+}
+
+window.changeContact = function(sel, type) {
+  const card = sel.closest('.db-card');
+  const id = parseInt(sel.value);
+  card.setAttribute('data-id', id);
+  const db = type === 'client' ? clientDB : vendorDB;
+  const item = db.find(x => x.id === id);
+  if(item) {
+     card.querySelector('.db-card-sub').innerHTML = renderSubText(item);
+  }
+}
+
+/* ===========================
    CLIENT DATABASE
 =========================== */
 async function loadDBFromStorage(){
@@ -2273,26 +2141,48 @@ function renderDB(){
       :'找不到符合的客戶。'}</div>`;
     return;
   }
-  list.innerHTML=filtered.map(c=>`
-    <div class="db-card">
-      <div class="db-card-info" onclick="applyClient(${c.id})">
-        <div class="db-card-name">${esc(c.name)}</div>
-        <div class="db-card-sub">
-          ${c.contact?esc(c.contact)+'　':''}
-          ${c.tel?'☎ '+esc(c.tel)+'　':''}
-          ${c.mobile?'📱 '+esc(c.mobile)+'　':''}
-          ${c.email?'✉ '+esc(c.email):''}
-          ${c.addr?'　📍 '+esc(c.addr):''}
-        </div>
-      </div>
-      <div class="db-card-actions">
-        <button class="btn btn-ghost btn-sm" onclick="applyClient(${c.id})">套用</button>
-        <button class="btn btn-red btn-sm" onclick="deleteClient(${c.id},event)">刪除</button>
-      </div>
-    </div>`).join('');
+
+  // 群組化 (根據公司名稱)
+  const groups = {};
+  filtered.forEach(c => {
+     const key = (c.name || '(未填寫公司名稱)').trim();
+     if(!groups[key]) groups[key] = [];
+     groups[key].push(c);
+  });
+
+  let html = '';
+  for(let cname in groups) {
+     const arr = groups[cname];
+     const first = arr[0];
+     let selectHtml = '';
+     if(arr.length > 1) {
+         selectHtml = `<select class="t-select" style="margin:6px 0;width:100%;max-width:280px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);" onchange="changeContact(this, 'client')" onclick="event.stopPropagation()">` +
+             arr.map(x => `<option value="${x.id}">聯絡人: ${esc(x.contact||'無')} ${x.mobile ? '('+esc(x.mobile)+')' : ''}</option>`).join('') +
+             `</select>`;
+     } else {
+         selectHtml = `<div style="font-size:11px;color:#a8a29e;margin:4px 0;">聯絡人：${esc(first.contact||'無')}</div>`;
+     }
+
+     html += `
+     <div class="db-card" data-id="${first.id}">
+       <div class="db-card-info" onclick="applyClientFromCard(this)">
+         <div class="db-card-name">${esc(cname)}</div>
+         ${selectHtml}
+         <div class="db-card-sub">${renderSubText(first)}</div>
+       </div>
+       <div class="db-card-actions">
+         <button class="btn btn-ghost btn-sm" onclick="editClientFromCard(this, event)">編輯</button>
+         <button class="btn btn-ghost btn-sm" onclick="applyClientFromCard(this, event)">套用</button>
+         <button class="btn btn-red btn-sm" onclick="deleteClientFromCard(this, event)">刪除</button>
+       </div>
+     </div>`;
+  }
+  list.innerHTML = html;
 }
 
-function applyClient(id){
+function applyClientFromCard(btn, e) {
+  if(e) e.stopPropagation();
+  const id = parseInt(btn.closest('.db-card').getAttribute('data-id'));
   const c=clientDB.find(x=>x.id===id); if(!c) return;
   $('c-name').value=c.name||'';
   $('c-taxid').value=c.taxid||'';
@@ -2303,18 +2193,39 @@ function applyClient(id){
   $('c-addr').value=c.addr||'';
   closeDB();
 }
-function deleteClient(id,e){
-  e.stopPropagation();
-  if(!confirm('確定刪除此客戶？')) return;
-  clientDB=clientDB.filter(c=>c.id!==id);
+
+function editClientFromCard(btn, e) {
+  if(e) e.stopPropagation();
+  const id = parseInt(btn.closest('.db-card').getAttribute('data-id'));
+  const c=clientDB.find(x=>x.id===id); if(!c) return;
+  $('sv-id').value = c.id;
+  $('sv-name').value = c.name || '';
+  $('sv-taxid').value = c.taxid || '';
+  $('sv-contact').value = c.contact || '';
+  $('sv-tel').value = c.tel || '';
+  $('sv-mobile').value = c.mobile || '';
+  $('sv-email').value = c.email || '';
+  $('sv-addr').value = c.addr || '';
+  closeDB();
+  $('save-overlay').classList.add('open');
+  setTimeout(()=>$('sv-name').focus(),100);
+}
+
+function deleteClientFromCard(btn, e){
+  if(e) e.stopPropagation();
+  const id = parseInt(btn.closest('.db-card').getAttribute('data-id'));
+  if(!confirm('確定刪除此聯絡人資料？')) return;
+  clientDB = clientDB.filter(c=>c.id!==id);
   saveDBToStorage(); renderDB();
 }
+
 function clearDB(){
   if(!confirm('確定清空整個客戶資料庫？')) return;
   clientDB=[]; saveDBToStorage(); renderDB();
 }
 
 function saveCurrentClient(){
+  $('sv-id').value=''; // 新增模式
   $('sv-name').value=$('c-name').value;
   $('sv-taxid').value=$('c-taxid').value;
   $('sv-contact').value=$('c-contact').value;
@@ -2327,16 +2238,20 @@ function saveCurrentClient(){
   setTimeout(()=>$('sv-name').focus(),100);
 }
 function confirmSave(){
+  const id = $('sv-id').value;
   const name=$('sv-name').value.trim();
   if(!name){alert('請輸入客戶名稱');return;}
-  const existing=clientDB.find(c=>c.name===name);
   const data={taxid:$('sv-taxid').value,contact:$('sv-contact').value,tel:$('sv-tel').value,mobile:$('sv-mobile').value,email:$('sv-email').value,addr:$('sv-addr').value};
-  if(existing){
-    if(!confirm(`「${name}」已存在，是否更新？`)) return;
-    Object.assign(existing,data,{updated:Date.now()});
+  
+  if(id) {
+    const existing = clientDB.find(c => c.id === parseInt(id));
+    if(existing) {
+      Object.assign(existing, {name, ...data, updated:Date.now()});
+    }
   } else {
     clientDB.push({id:Date.now(),name,...data,created:Date.now()});
   }
+  
   saveDBToStorage(); closeSave();
   alert(`✅ 已儲存「${name}」`);
 }
@@ -2385,27 +2300,47 @@ function renderVendorDB(){
       :'找不到符合的報價方。'}</div>`;
     return;
   }
-  list.innerHTML=filtered.map(v=>`
-    <div class="db-card">
-      <div class="db-card-info" onclick="applyVendor(${v.id})">
-        <div class="db-card-name">${esc(v.name)}</div>
-        <div class="db-card-sub">
-          ${v.taxid?'統編 '+esc(v.taxid)+'　':''}
-          ${v.contact?esc(v.contact)+'　':''}
-          ${v.tel?'☎ '+esc(v.tel)+'　':''}
-          ${v.mobile?'📱 '+esc(v.mobile)+'　':''}
-          ${v.email?'✉ '+esc(v.email):''}
-          ${v.addr?'　📍 '+esc(v.addr):''}
-        </div>
-      </div>
-      <div class="db-card-actions">
-        <button class="btn btn-ghost btn-sm" onclick="applyVendor(${v.id})">套用</button>
-        <button class="btn btn-red btn-sm" onclick="deleteVendor(${v.id},event)">刪除</button>
-      </div>
-    </div>`).join('');
+
+  const groups = {};
+  filtered.forEach(c => {
+     const key = (c.name || '(未填寫公司名稱)').trim();
+     if(!groups[key]) groups[key] = [];
+     groups[key].push(c);
+  });
+
+  let html = '';
+  for(let cname in groups) {
+     const arr = groups[cname];
+     const first = arr[0];
+     let selectHtml = '';
+     if(arr.length > 1) {
+         selectHtml = `<select class="t-select" style="margin:6px 0;width:100%;max-width:280px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);" onchange="changeContact(this, 'vendor')" onclick="event.stopPropagation()">` +
+             arr.map(x => `<option value="${x.id}">聯絡人: ${esc(x.contact||'無')} ${x.mobile ? '('+esc(x.mobile)+')' : ''}</option>`).join('') +
+             `</select>`;
+     } else {
+         selectHtml = `<div style="font-size:11px;color:#a8a29e;margin:4px 0;">聯絡人：${esc(first.contact||'無')}</div>`;
+     }
+
+     html += `
+     <div class="db-card" data-id="${first.id}">
+       <div class="db-card-info" onclick="applyVendorFromCard(this)">
+         <div class="db-card-name">${esc(cname)}</div>
+         ${selectHtml}
+         <div class="db-card-sub">${renderSubText(first)}</div>
+       </div>
+       <div class="db-card-actions">
+         <button class="btn btn-ghost btn-sm" onclick="editVendorFromCard(this, event)">編輯</button>
+         <button class="btn btn-ghost btn-sm" onclick="applyVendorFromCard(this, event)">套用</button>
+         <button class="btn btn-red btn-sm" onclick="deleteVendorFromCard(this, event)">刪除</button>
+       </div>
+     </div>`;
+  }
+  list.innerHTML = html;
 }
 
-function applyVendor(id){
+function applyVendorFromCard(btn, e){
+  if(e) e.stopPropagation();
+  const id = parseInt(btn.closest('.db-card').getAttribute('data-id'));
   const v=vendorDB.find(x=>x.id===id); if(!v) return;
   $('my-name').value=v.name||'';
   $('my-taxid').value=v.taxid||'';
@@ -2416,18 +2351,39 @@ function applyVendor(id){
   $('my-addr').value=v.addr||'';
   closeVendorDB();
 }
-function deleteVendor(id,e){
-  e.stopPropagation();
-  if(!confirm('確定刪除此報價方？')) return;
+
+function editVendorFromCard(btn, e){
+  if(e) e.stopPropagation();
+  const id = parseInt(btn.closest('.db-card').getAttribute('data-id'));
+  const v=vendorDB.find(x=>x.id===id); if(!v) return;
+  $('vsv-id').value = v.id;
+  $('vsv-name').value = v.name || '';
+  $('vsv-taxid').value = v.taxid || '';
+  $('vsv-contact').value = v.contact || '';
+  $('vsv-tel').value = v.tel || '';
+  $('vsv-mobile').value = v.mobile || '';
+  $('vsv-email').value = v.email || '';
+  $('vsv-addr').value = v.addr || '';
+  closeVendorDB();
+  $('vsave-overlay').classList.add('open');
+  setTimeout(()=>$('vsv-name').focus(),100);
+}
+
+function deleteVendorFromCard(btn, e){
+  if(e) e.stopPropagation();
+  const id = parseInt(btn.closest('.db-card').getAttribute('data-id'));
+  if(!confirm('確定刪除此聯絡人資料？')) return;
   vendorDB=vendorDB.filter(v=>v.id!==id);
   saveVendorDBToStorage(); renderVendorDB();
 }
+
 function clearVendorDB(){
   if(!confirm('確定清空整個報價方資料庫？')) return;
   vendorDB=[]; saveVendorDBToStorage(); renderVendorDB();
 }
 
 function saveCurrentVendor(){
+  $('vsv-id').value = '';
   $('vsv-name').value=$('my-name').value;
   $('vsv-taxid').value=$('my-taxid').value;
   $('vsv-contact').value=$('my-contact').value;
@@ -2440,16 +2396,20 @@ function saveCurrentVendor(){
   setTimeout(()=>$('vsv-name').focus(),100);
 }
 function confirmVendorSave(){
+  const id = $('vsv-id').value;
   const name=$('vsv-name').value.trim();
   if(!name){alert('請輸入公司名稱');return;}
-  const existing=vendorDB.find(v=>v.name===name);
   const data={taxid:$('vsv-taxid').value,contact:$('vsv-contact').value,tel:$('vsv-tel').value,mobile:$('vsv-mobile').value,email:$('vsv-email').value,addr:$('vsv-addr').value};
-  if(existing){
-    if(!confirm(`「${name}」已存在，是否更新？`)) return;
-    Object.assign(existing,data,{updated:Date.now()});
+  
+  if(id) {
+    const existing = vendorDB.find(v => v.id === parseInt(id));
+    if(existing) {
+      Object.assign(existing, {name, ...data, updated:Date.now()});
+    }
   } else {
     vendorDB.push({id:Date.now(),name,...data,created:Date.now()});
   }
+
   saveVendorDBToStorage(); closeVSave();
   alert(`✅ 已儲存「${name}」`);
 }
