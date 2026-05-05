@@ -869,7 +869,8 @@ input[type="date"] { cursor: pointer; }
           <div class="f-row"><span class="f-lbl">統編</span><input type="text" class="f-inp" id="c-taxid" placeholder="選填"></div>
           <div class="f-row"><span class="f-lbl">聯絡人</span><input type="text" class="f-inp" id="c-contact" placeholder="選填"></div>
           <div class="f-row"><span class="f-lbl">電話</span><input type="text" class="f-inp" id="c-tel" placeholder="選填"></div>
-          <div class="f-row"><span class="f-lbl">Email</span><input type="text" class="f-inp" id="c-email" placeholder="選填"></div>
+          <div class="f-row"><span class="f-lbl">手機</span><input type="text" class="f-inp" id="c-mobile" placeholder="選填"></div>
+          <div class="f-row" style="grid-column:span 2"><span class="f-lbl">Email</span><input type="text" class="f-inp" id="c-email" placeholder="選填"></div>
           <div class="f-row" style="grid-column:span 2"><span class="f-lbl">地址</span><input type="text" class="f-inp" id="c-addr" placeholder="選填"></div>
         </div>
       </div>
@@ -885,7 +886,8 @@ input[type="date"] { cursor: pointer; }
           <div class="f-row"><span class="f-lbl">統編</span><input type="text" class="f-inp" id="my-taxid" placeholder="選填"></div>
           <div class="f-row"><span class="f-lbl">聯絡人</span><input type="text" class="f-inp" id="my-contact" placeholder="選填"></div>
           <div class="f-row"><span class="f-lbl">電話</span><input type="text" class="f-inp" id="my-tel" placeholder="選填"></div>
-          <div class="f-row"><span class="f-lbl">Email</span><input type="text" class="f-inp" id="my-email" placeholder="選填"></div>
+          <div class="f-row"><span class="f-lbl">手機</span><input type="text" class="f-inp" id="my-mobile" placeholder="選填"></div>
+          <div class="f-row" style="grid-column:span 2"><span class="f-lbl">Email</span><input type="text" class="f-inp" id="my-email" placeholder="選填"></div>
           <div class="f-row" style="grid-column:span 2"><span class="f-lbl">地址</span><input type="text" class="f-inp" id="my-addr" placeholder="選填"></div>
         </div>
       </div>
@@ -1020,7 +1022,7 @@ input[type="date"] { cursor: pointer; }
     <option value="4px">4</option>
     <option value="5px">5</option>
     <option value="8px">8</option>
-    <option value="10px">10</option>
+    <option value="10px">10px</option>
   </select>
   <div class="itb-sep"></div>
   <button class="itb-btn" onclick="itbReset()" title="還原預設">↺</button>
@@ -1240,7 +1242,7 @@ input[type="date"] { cursor: pointer; }
       <div class="import-zone-icon">📊</div>
       <div class="import-zone-text">
         <div class="import-zone-title">匯入 Excel 客戶資料</div>
-        <div class="import-zone-desc">支援 .xlsx / .xls 格式，欄位順序：姓名、統編、聯絡人、電話、Email、地址</div>
+        <div class="import-zone-desc">支援 .xlsx / .xls 格式，欄位順序：姓名、統編、聯絡人、電話、手機、Email、地址</div>
       </div>
       <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end">
         <button class="import-drop" onclick="document.getElementById('xl-input').click()">
@@ -1254,7 +1256,7 @@ input[type="date"] { cursor: pointer; }
     <div class="import-msg" id="import-msg"></div>
 
     <div class="db-toolbar">
-      <input type="text" class="db-search-input" id="db-search" placeholder="搜尋姓名、電話、Email…" oninput="renderDB()">
+      <input type="text" class="db-search-input" id="db-search" placeholder="搜尋姓名、電話、手機、Email…" oninput="renderDB()">
     </div>
 
     <div class="db-list" id="db-list"></div>
@@ -1278,6 +1280,7 @@ input[type="date"] { cursor: pointer; }
     <div class="sf"><label>統一編號</label><input type="text" id="sv-taxid"></div>
     <div class="sf"><label>聯絡人</label><input type="text" id="sv-contact"></div>
     <div class="sf"><label>電話</label><input type="text" id="sv-tel"></div>
+    <div class="sf"><label>手機</label><input type="text" id="sv-mobile"></div>
     <div class="sf"><label>Email</label><input type="text" id="sv-email"></div>
     <div class="sf"><label>地址</label><input type="text" id="sv-addr"></div>
     <div class="save-actions">
@@ -1305,7 +1308,7 @@ input[type="date"] { cursor: pointer; }
       <div class="import-zone-icon">🏢</div>
       <div class="import-zone-text">
         <div class="import-zone-title">匯入 Excel 報價方資料</div>
-        <div class="import-zone-desc">支援 .xlsx / .xls 格式，欄位順序：公司名稱、統編、聯絡人、電話、Email、地址</div>
+        <div class="import-zone-desc">支援 .xlsx / .xls 格式，欄位順序：公司名稱、統編、聯絡人、電話、手機、Email、地址</div>
       </div>
       <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end">
         <button class="import-drop" onclick="document.getElementById('vxl-input').click()">📂 選擇 Excel 檔案</button>
@@ -1315,7 +1318,7 @@ input[type="date"] { cursor: pointer; }
     </div>
     <div class="import-msg" id="vimport-msg"></div>
     <div class="db-toolbar">
-      <input type="text" class="db-search-input" id="vdb-search" placeholder="搜尋公司名稱、電話、Email…" oninput="renderVendorDB()">
+      <input type="text" class="db-search-input" id="vdb-search" placeholder="搜尋公司名稱、電話、手機、Email…" oninput="renderVendorDB()">
     </div>
     <div class="db-list" id="vdb-list"></div>
     <div class="db-foot">
@@ -1336,6 +1339,7 @@ input[type="date"] { cursor: pointer; }
     <div class="sf"><label>統一編號</label><input type="text" id="vsv-taxid"></div>
     <div class="sf"><label>聯絡人</label><input type="text" id="vsv-contact"></div>
     <div class="sf"><label>電話</label><input type="text" id="vsv-tel"></div>
+    <div class="sf"><label>手機</label><input type="text" id="vsv-mobile"></div>
     <div class="sf"><label>Email</label><input type="text" id="vsv-email"></div>
     <div class="sf"><label>地址</label><input type="text" id="vsv-addr"></div>
     <div class="save-actions">
@@ -1423,7 +1427,6 @@ window.onload = async () => {
 
 /* ===== Print handling ===== */
 window.addEventListener('beforeprint', () => {
-  // Set explicit text-align on each td
   document.querySelectorAll('.item-table td').forEach(td => {
     const inp = td.querySelector('input, textarea');
     if (inp) {
@@ -1431,28 +1434,24 @@ window.addEventListener('beforeprint', () => {
       td.style.textAlign = align;
     }
   });
-  // Replace item-table textareas with plain divs so line breaks render correctly in PDF
   document.querySelectorAll('.item-table textarea').forEach(ta => {
-    if (ta.dataset.printDiv) return; // already inserted
+    if (ta.dataset.printDiv) return;
     const div = document.createElement('div');
     div.className = 'print-cell-text';
     div.textContent = ta.value;
     ta.dataset.printDiv = '1';
     ta.parentNode.insertBefore(div, ta);
   });
-  // Expand non-table textareas
   document.querySelectorAll('textarea:not(.item-table textarea)').forEach(ta => {
     ta.style.height = 'auto';
     ta.style.height = ta.scrollHeight + 'px';
     ta.style.overflow = 'visible';
   });
-  // Meta strip
   const ms = $('meta-strip');
   if(ms) ms.style.display = metaOpen ? 'flex' : 'none';
 });
 
 window.addEventListener('afterprint', () => {
-  // Remove inserted divs and clean up markers
   document.querySelectorAll('.item-table .print-cell-text').forEach(div => div.remove());
   document.querySelectorAll('.item-table textarea[data-print-div]').forEach(ta => {
     delete ta.dataset.printDiv;
@@ -1524,7 +1523,6 @@ function toggleMeta() {
   const strip = $('meta-strip');
   const btn   = $('meta-toggle-pill');
   if(metaOpen) {
-    // Build meta strip content if empty
     if(!strip.querySelector('.meta-item')) {
       strip.innerHTML = `
         <div class="meta-item"><div class="meta-key">報價單號</div><input type="text" id="q-no"></div>
@@ -1576,7 +1574,6 @@ function addSignImageToContainer(side, src) {
   img.className = 'sign-img';
   img.style.cssText = 'width:80px;height:auto;object-fit:contain;border:1px dashed #d6cfc5;border-radius:4px;background:#f9f7f4;display:block;user-select:none;';
   
-  // Drag-resize handle (bottom-right corner)
   const handle = document.createElement('div');
   handle.className = 'sign-resize-handle';
   handle.style.cssText = 'position:absolute;right:-1px;bottom:-1px;width:14px;height:14px;cursor:se-resize;background:var(--t-acc,#b45309);border-radius:2px 0 4px 0;opacity:0;transition:opacity .15s;z-index:2;display:flex;align-items:center;justify-content:center;';
@@ -1586,7 +1583,6 @@ function addSignImageToContainer(side, src) {
   wrapper.onmouseenter = () => { handle.style.opacity = '1'; delBtn.style.opacity = '1'; };
   wrapper.onmouseleave = () => { handle.style.opacity = '0'; delBtn.style.opacity = '0'; };
 
-  // Delete button (top-right)
   const delBtn = document.createElement('div');
   delBtn.className = 'sign-img-del';
   delBtn.style.cssText = 'position:absolute;top:-7px;right:-7px;width:16px;height:16px;background:#dc2626;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .15s;z-index:3;';
@@ -1594,7 +1590,6 @@ function addSignImageToContainer(side, src) {
   delBtn.title = '移除';
   delBtn.onclick = () => container.removeChild(wrapper);
 
-  // Drag-resize logic
   handle.addEventListener('mousedown', function(e) {
     e.preventDefault();
     const startX = e.clientX;
@@ -1626,7 +1621,6 @@ function setTheme(cls, btn) {
 }
 function setPaperStyle(p,v){ $('paper').style[p]=v; }
 
-// Accent presets: each swatch also carries a full color scheme
 const accentPresets = {
   '#b45309': { acc:'#b45309', headBg:'#1c1917', headFg:'#fdfcfb', line:'#c9bfb0', titleColor:'#1c1917' },
   '#1e40af': { acc:'#1e40af', headBg:'#1e3a5f', headFg:'#e0f2fe', line:'#93c5fd', titleColor:'#1e3a5f' },
@@ -1645,7 +1639,6 @@ function applyAccentScheme(color) {
     p.style.setProperty('--t-line', preset.line);
     p.style.setProperty('--t-title-color', preset.titleColor);
   } else {
-    // Custom color: derive a dark shade for head-bg automatically
     p.style.setProperty('--t-acc', color);
     p.style.setProperty('--t-head-bg', color);
     p.style.setProperty('--t-head-fg', '#ffffff');
@@ -1737,7 +1730,7 @@ function closeAddCol(){ $('addcol-overlay').classList.remove('open'); }
 function confirmAddCol(){
   const name = $('addcol-name').value.trim();
   if(!name){ alert('請輸入欄位標題'); return; }
-  const col = { id:'cc_'+Date.now(), name, width:$addcol-width.value, align:$('addcol-align').value };
+  const col = { id:'cc_'+Date.now(), name, width:$('addcol-width').value, align:$('addcol-align').value };
   customCols.push(col);
   renderCustomColChips();
   renderTable();
@@ -1787,7 +1780,6 @@ function applyFieldStyle() {
     if (lh) el.style.lineHeight = lh;
     if (ls) el.style.letterSpacing = ls;
   });
-  // For title: also set CSS vars so they survive theme changes
   if (isTitleTarget) {
     if (font) paper.style.setProperty('--title-font', font);
     if (size) paper.style.setProperty('--title-size', size);
@@ -1799,11 +1791,8 @@ function applyFieldStyle() {
 
 /* ===== Items ===== */
 function renderTable(){
-  // Sync thead custom cols
   const thead = $('thead-row');
-  // Remove old custom col headers
   thead.querySelectorAll('.th-custom').forEach(el=>el.remove());
-  // Re-insert before th-del
   const thDel = thead.querySelector('.th-del');
   customCols.forEach(col=>{
     const th = document.createElement('th');
@@ -1839,7 +1828,6 @@ function renderTable(){
       <td class="td-amt" id="a-${it.id}">${fmt(calcAmt(it))}</td>
       <td class="col-remark" style="display:${colState.remark?'':'none'}"><input type="text" value="${it.remark||''}" placeholder="備註" oninput="upd(${it.id},'remark',this.value)"></td>
       ${customCells}`;
-    // Append delete button as a proper td that's visually outside (via negative margin)
     const tdDel = document.createElement('td');
     tdDel.className = 'td-del-float';
     const delBtn = document.createElement('button');
@@ -1860,16 +1848,12 @@ function calcAmt(it){
   if(!it.discount) return base;
   const d = String(it.discount).trim();
   if(d === '') return base;
-  // Support: "90%" = keep 90%, "10%" discount = multiply by 0.9
-  // Support: "0.9" = multiplier, "90" = treat as 90% off discount
   const pct = d.endsWith('%');
   const num = parseFloat(d);
   if(isNaN(num)) return base;
   if(pct){
-    // e.g. "10%" means 10% discount → pay 90%
     return Math.round(base * (1 - num/100));
   } else {
-    // plain number: treat as discount percentage
     if(num > 0 && num <= 100) return Math.round(base * (1 - num/100));
     return base;
   }
@@ -1908,11 +1892,11 @@ function loadSample(){
     {id:2,name:'後台內容管理系統 (CMS)\n— 提供客戶自行更新最新消息與產品資訊',qty:1,unit:'式',price:25000},
     {id:3,name:'主機代管費用（第一年）',qty:1,unit:'年',price:6000},
   ];
-  // Fill vendor sample fields
   $('my-name').value='數位設計科技有限公司';
   $('my-taxid').value='12345678';
   $('my-contact').value='陳經理';
   $('my-tel').value='(02) 2345-6789';
+  $('my-mobile').value='0912-345-678';
   $('my-email').value='service@example.com';
   $('my-addr').value='台北市信義區信義路五段7號';
   renderTable();
@@ -1920,8 +1904,8 @@ function loadSample(){
 function clearAll(){
   if(!confirm('確定清空所有資料？')) return;
   items=[{id:Date.now(),name:'',qty:1,unit:'式',price:0}];
-  ['c-name','c-taxid','c-contact','c-tel','c-email','c-addr'].forEach(id=>$(id).value='');
-  ['my-name','my-taxid','my-contact','my-tel','my-email','my-addr'].forEach(id=>$(id).value='');
+  ['c-name','c-taxid','c-contact','c-tel','c-mobile','c-email','c-addr'].forEach(id=>$(id).value='');
+  ['my-name','my-taxid','my-contact','my-tel','my-mobile','my-email','my-addr'].forEach(id=>$(id).value='');
   if($('q-no')) genNo();
   renderTable();
 }
@@ -1934,7 +1918,6 @@ let itbTarget = null; // currently focused element
 function showITB(el, event) {
   itbTarget = el;
   const tb = document.getElementById('inline-toolbar');
-  // Sync current styles
   const cs = window.getComputedStyle(el);
   const ff = el.style.fontFamily || '';
   const fs = el.style.fontSize || '';
@@ -1944,7 +1927,6 @@ function showITB(el, event) {
   const lh = el.style.lineHeight || '';
   const fc = el.style.color || '';
 
-  // Set selects
   const fontSel = document.getElementById('itb-font');
   fontSel.value = '';
   for(let o of fontSel.options) { if(ff && ff.includes(o.value.split(',')[0].replace(/'/g,''))) { fontSel.value = o.value; break; } }
@@ -1954,27 +1936,21 @@ function showITB(el, event) {
   
   document.getElementById('itb-lh').value = lh || '';
 
-  // Letter-spacing
   const ls = el.style.letterSpacing || '';
-  // find matching option
   const lsSel = document.getElementById('itb-ls');
   lsSel.value = ls || '';
   if(lsSel.value !== (ls||'')) lsSel.value = '';
 
-  // Bold/Italic buttons
   document.getElementById('itb-bold').classList.toggle('on', fw === '700' || fw === 'bold');
   document.getElementById('itb-italic').classList.toggle('on', fi === 'italic');
 
-  // Align buttons
   ['left','center','right'].forEach(a => {
     document.getElementById('itb-' + a).classList.toggle('on', ta === a);
   });
 
-  // Color swatch
   const colorBtn = document.getElementById('itb-color-btn');
   if(fc) colorBtn.style.background = fc;
 
-  // Position toolbar above the element
   tb.classList.add('visible');
   const rect = el.getBoundingClientRect();
   const tbRect = tb.getBoundingClientRect();
@@ -2035,9 +2011,7 @@ function itbReset() {
   hideITB();
 }
 
-// Attach focus listener to all paper inputs/textareas (and re-attach after renderTable)
 function attachITBListeners() {
-  // Paper fields
   document.querySelectorAll('.paper input, .paper textarea').forEach(el => {
     if(el._itbAttached) return;
     el._itbAttached = true;
@@ -2045,20 +2019,17 @@ function attachITBListeners() {
       setTimeout(() => showITB(el, e), 80);
     });
   });
-  // th-input: also attach + prevent drag events bubbling to th
   document.querySelectorAll('.th-input').forEach(el => {
     if(el._itbAttached) return;
     el._itbAttached = true;
     el.addEventListener('focus', function(e) {
       setTimeout(() => showITB(el, e), 80);
     });
-    // Prevent input interactions from triggering column drag
     el.addEventListener('mousedown', e => e.stopPropagation());
     el.addEventListener('dragstart', e => e.preventDefault());
   });
 }
 
-// Close toolbar when clicking outside paper or toolbar
 document.addEventListener('mousedown', function(e) {
   const tb = document.getElementById('inline-toolbar');
   if(!tb.contains(e.target) && !e.target.closest('.paper input, .paper textarea')) {
@@ -2070,9 +2041,6 @@ document.addEventListener('mousedown', function(e) {
    TABLE COLUMN RESIZE & DRAG
 =========================== */
 
-// Column definitions for reordering
-// Each col: { key, thClass, visible, fixed }
-// We track order as an array of column keys
 const COL_DEFS = [
   { key: 'no',       label: '#',             thClass: 'th-no',       fixed: true,  defaultW: '4%'  },
   { key: 'name',     label: '項目名稱',       thClass: 'th-name',     fixed: false, defaultW: '43%' },
@@ -2086,7 +2054,7 @@ const COL_DEFS = [
 ];
 
 let colOrder = COL_DEFS.map(c => c.key);
-let colWidths = {}; // key -> width string (px or %)
+let colWidths = {}; 
 COL_DEFS.forEach(c => colWidths[c.key] = c.defaultW);
 
 let dragSrcKey = null;
@@ -2100,7 +2068,6 @@ function initColResizeAndDrag() {
     const key = getKeyFromTh(th);
     if(!key) return;
 
-    // Inject drag-dot indicator if not present
     const def = COL_DEFS.find(c => c.key === key);
     if(def && !def.fixed) {
       th.setAttribute('draggable', 'true');
@@ -2110,7 +2077,6 @@ function initColResizeAndDrag() {
         dot.textContent = '⠿';
         th.insertBefore(dot, th.firstChild);
       }
-      // Remove old listeners (clone trick)
       const newTh = th.cloneNode(true);
       th.parentNode.replaceChild(newTh, th);
       const activeTh = newTh;
@@ -2120,7 +2086,6 @@ function initColResizeAndDrag() {
       activeTh.addEventListener('drop', onColDrop);
       activeTh.addEventListener('dragend', onColDragEnd);
 
-      // Stop drag when interacting with th-input
       const inp = activeTh.querySelector('.th-input');
       if(inp) {
         inp.addEventListener('mousedown', e => e.stopPropagation());
@@ -2131,7 +2096,6 @@ function initColResizeAndDrag() {
         }
       }
 
-      // Resize handle
       let handle = activeTh.querySelector('.col-resize-handle');
       if(!handle) {
         handle = document.createElement('div');
@@ -2142,7 +2106,6 @@ function initColResizeAndDrag() {
       handle.setAttribute('draggable', 'false');
       handle.addEventListener('dragstart', e => e.preventDefault());
     } else {
-      // Fixed columns: resize only (no drag, no dot)
       th.removeAttribute('draggable');
       let handle = th.querySelector('.col-resize-handle');
       if(!handle) {
@@ -2168,7 +2131,6 @@ function getKeyFromTh(th) {
   return null;
 }
 
-/* Resize */
 function startResize(e, th, key) {
   e.preventDefault(); e.stopPropagation();
   const startX = e.clientX;
@@ -2190,7 +2152,6 @@ function startResize(e, th, key) {
   document.addEventListener('mouseup', onUp);
 }
 
-/* Drag to reorder */
 function onColDragStart(e) {
   dragSrcKey = getKeyFromTh(this);
   this.classList.add('dragging-col');
@@ -2212,7 +2173,6 @@ function onColDrop(e) {
   const dstIdx = colOrder.indexOf(destKey);
   if(srcIdx === -1 || dstIdx === -1) return;
 
-  // Reorder thead columns
   colOrder.splice(srcIdx, 1);
   colOrder.splice(dstIdx, 0, dragSrcKey);
 
@@ -2229,20 +2189,17 @@ function reorderThead() {
   const thead = document.getElementById('thead-row');
   const ths = Array.from(thead.querySelectorAll('th'));
   
-  // Build key->th map
   const thMap = {};
   ths.forEach(th => {
     const k = getKeyFromTh(th);
     if(k) thMap[k] = th;
   });
 
-  // Reappend in new order
   colOrder.forEach(key => {
     const th = thMap[key];
     if(th) thead.appendChild(th);
   });
 
-  // Re-init listeners after reorder
   initColResizeAndDrag();
 }
 
@@ -2252,21 +2209,14 @@ function reorderTbody() {
   
   rows.forEach(tr => {
     const tds = Array.from(tr.querySelectorAll('td'));
-    // Map tds by their position matching colOrder
-    // Use data-col attributes if available
-    // Simpler: just re-render
   });
   
-  // Re-render table to apply order
   renderTable();
 }
 
-// Override renderTable to re-init listeners after each render
 const _origRenderTable = renderTable;
-// We'll call initColResizeAndDrag and attachITBListeners after renderTable
 const _renderTableOrig = window.renderTable;
 
-// Patch: call after renderTable
 function afterRender() {
   setTimeout(() => {
     initColResizeAndDrag();
@@ -2274,7 +2224,6 @@ function afterRender() {
   }, 0);
 }
 
-// Initialize on load
 window.addEventListener('load', () => {
   setTimeout(() => {
     initColResizeAndDrag();
@@ -2297,7 +2246,6 @@ async function saveDBToStorage(){
   } catch(e){ console.warn('saveClientDB error',e); }
 }
 
-/* Open/Close DB */
 function openDB(){
   $('db-search').value='';
   $('import-msg').className='import-msg';
@@ -2314,6 +2262,7 @@ function renderDB(){
   const filtered=clientDB.filter(c=>
     (c.name||'').toLowerCase().includes(q)||
     (c.tel||'').toLowerCase().includes(q)||
+    (c.mobile||'').toLowerCase().includes(q)||
     (c.email||'').toLowerCase().includes(q)||
     (c.contact||'').toLowerCase().includes(q)
   );
@@ -2330,7 +2279,8 @@ function renderDB(){
         <div class="db-card-name">${esc(c.name)}</div>
         <div class="db-card-sub">
           ${c.contact?esc(c.contact)+'　':''}
-          ${c.tel?'📞 '+esc(c.tel)+'　':''}
+          ${c.tel?'☎ '+esc(c.tel)+'　':''}
+          ${c.mobile?'📱 '+esc(c.mobile)+'　':''}
           ${c.email?'✉ '+esc(c.email):''}
           ${c.addr?'　📍 '+esc(c.addr):''}
         </div>
@@ -2348,6 +2298,7 @@ function applyClient(id){
   $('c-taxid').value=c.taxid||'';
   $('c-contact').value=c.contact||'';
   $('c-tel').value=c.tel||'';
+  $('c-mobile').value=c.mobile||'';
   $('c-email').value=c.email||'';
   $('c-addr').value=c.addr||'';
   closeDB();
@@ -2363,12 +2314,12 @@ function clearDB(){
   clientDB=[]; saveDBToStorage(); renderDB();
 }
 
-/* Save current client */
 function saveCurrentClient(){
   $('sv-name').value=$('c-name').value;
   $('sv-taxid').value=$('c-taxid').value;
   $('sv-contact').value=$('c-contact').value;
   $('sv-tel').value=$('c-tel').value;
+  $('sv-mobile').value=$('c-mobile').value;
   $('sv-email').value=$('c-email').value;
   $('sv-addr').value=$('c-addr').value;
   closeDB();
@@ -2379,7 +2330,7 @@ function confirmSave(){
   const name=$('sv-name').value.trim();
   if(!name){alert('請輸入客戶名稱');return;}
   const existing=clientDB.find(c=>c.name===name);
-  const data={taxid:$('sv-taxid').value,contact:$('sv-contact').value,tel:$('sv-tel').value,email:$('sv-email').value,addr:$('sv-addr').value};
+  const data={taxid:$('sv-taxid').value,contact:$('sv-contact').value,tel:$('sv-tel').value,mobile:$('sv-mobile').value,email:$('sv-email').value,addr:$('sv-addr').value};
   if(existing){
     if(!confirm(`「${name}」已存在，是否更新？`)) return;
     Object.assign(existing,data,{updated:Date.now()});
@@ -2423,6 +2374,7 @@ function renderVendorDB(){
   const filtered=vendorDB.filter(v=>
     (v.name||'').toLowerCase().includes(q)||
     (v.tel||'').toLowerCase().includes(q)||
+    (v.mobile||'').toLowerCase().includes(q)||
     (v.email||'').toLowerCase().includes(q)||
     (v.contact||'').toLowerCase().includes(q)
   );
@@ -2440,7 +2392,8 @@ function renderVendorDB(){
         <div class="db-card-sub">
           ${v.taxid?'統編 '+esc(v.taxid)+'　':''}
           ${v.contact?esc(v.contact)+'　':''}
-          ${v.tel?'📞 '+esc(v.tel)+'　':''}
+          ${v.tel?'☎ '+esc(v.tel)+'　':''}
+          ${v.mobile?'📱 '+esc(v.mobile)+'　':''}
           ${v.email?'✉ '+esc(v.email):''}
           ${v.addr?'　📍 '+esc(v.addr):''}
         </div>
@@ -2458,6 +2411,7 @@ function applyVendor(id){
   $('my-taxid').value=v.taxid||'';
   $('my-contact').value=v.contact||'';
   $('my-tel').value=v.tel||'';
+  $('my-mobile').value=v.mobile||'';
   $('my-email').value=v.email||'';
   $('my-addr').value=v.addr||'';
   closeVendorDB();
@@ -2478,6 +2432,7 @@ function saveCurrentVendor(){
   $('vsv-taxid').value=$('my-taxid').value;
   $('vsv-contact').value=$('my-contact').value;
   $('vsv-tel').value=$('my-tel').value;
+  $('vsv-mobile').value=$('my-mobile').value;
   $('vsv-email').value=$('my-email').value;
   $('vsv-addr').value=$('my-addr').value;
   closeVendorDB();
@@ -2488,7 +2443,7 @@ function confirmVendorSave(){
   const name=$('vsv-name').value.trim();
   if(!name){alert('請輸入公司名稱');return;}
   const existing=vendorDB.find(v=>v.name===name);
-  const data={taxid:$('vsv-taxid').value,contact:$('vsv-contact').value,tel:$('vsv-tel').value,email:$('vsv-email').value,addr:$('vsv-addr').value};
+  const data={taxid:$('vsv-taxid').value,contact:$('vsv-contact').value,tel:$('vsv-tel').value,mobile:$('vsv-mobile').value,email:$('vsv-email').value,addr:$('vsv-addr').value};
   if(existing){
     if(!confirm(`「${name}」已存在，是否更新？`)) return;
     Object.assign(existing,data,{updated:Date.now()});
@@ -2518,7 +2473,7 @@ function importVendorExcel(event){
         const row=rows[i];
         const name=String(row[0]||'').trim();
         if(!name){ skipped++; continue; }
-        const entry={taxid:String(row[1]||'').trim(),contact:String(row[2]||'').trim(),tel:String(row[3]||'').trim(),email:String(row[4]||'').trim(),addr:String(row[5]||'').trim()};
+        const entry={taxid:String(row[1]||'').trim(),contact:String(row[2]||'').trim(),tel:String(row[3]||'').trim(),mobile:String(row[4]||'').trim(),email:String(row[5]||'').trim(),addr:String(row[6]||'').trim()};
         const existing=vendorDB.find(v=>v.name===name);
         if(existing){ Object.assign(existing,entry,{updated:Date.now()}); updated++; }
         else { vendorDB.push({id:Date.now()+i,name,...entry,created:Date.now()}); added++; }
@@ -2534,20 +2489,20 @@ function importVendorExcel(event){
 
 function exportVendorDB(){
   if(vendorDB.length===0){alert('報價方資料庫是空的');return;}
-  const header=['公司名稱','統編','聯絡人','電話','Email','地址'];
-  const rows=vendorDB.map(v=>[v.name,v.taxid,v.contact,v.tel,v.email,v.addr]);
+  const header=['公司名稱','統編','聯絡人','電話','手機','Email','地址'];
+  const rows=vendorDB.map(v=>[v.name,v.taxid,v.contact,v.tel,v.mobile,v.email,v.addr]);
   const ws=XLSX.utils.aoa_to_sheet([header,...rows]);
-  ws['!cols']=[{wch:20},{wch:12},{wch:14},{wch:16},{wch:28},{wch:36}];
+  ws['!cols']=[{wch:20},{wch:12},{wch:14},{wch:16},{wch:16},{wch:28},{wch:36}];
   const wb=XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb,ws,'報價方資料庫');
   XLSX.writeFile(wb,'報價方資料庫.xlsx');
 }
 
 function downloadVendorTemplate(){
-  const header=['公司名稱','統編','聯絡人','電話','Email','地址'];
-  const sample=['數位設計科技有限公司','12345678','陳經理','(02) 2345-6789','service@example.com','台北市信義區信義路五段7號'];
+  const header=['公司名稱','統編','聯絡人','電話','手機','Email','地址'];
+  const sample=['數位設計科技有限公司','12345678','陳經理','(02) 2345-6789','0912-345-678','service@example.com','台北市信義區信義路五段7號'];
   const ws=XLSX.utils.aoa_to_sheet([header,sample]);
-  ws['!cols']=[{wch:20},{wch:12},{wch:14},{wch:16},{wch:28},{wch:36}];
+  ws['!cols']=[{wch:20},{wch:12},{wch:14},{wch:16},{wch:16},{wch:28},{wch:36}];
   const wb=XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb,ws,'報價方資料');
   XLSX.writeFile(wb,'報價方資料庫範本.xlsx');
@@ -2556,10 +2511,6 @@ function downloadVendorTemplate(){
 /* ===========================
    EXCEL IMPORT / EXPORT (Client)
 =========================== */
-/*
-  Expected columns (order matters, header row is skipped):
-  A: 姓名  B: 統編  C: 聯絡人  D: 電話  E: Email  F: 地址
-*/
 function importExcel(event){
   const file=event.target.files[0];
   if(!file){ return; }
@@ -2581,7 +2532,6 @@ function importExcel(event){
       }
 
       let added=0, updated=0, skipped=0;
-      // skip first row (header)
       for(let i=1;i<rows.length;i++){
         const row=rows[i];
         const name=String(row[0]||'').trim();
@@ -2590,8 +2540,9 @@ function importExcel(event){
           taxid:   String(row[1]||'').trim(),
           contact: String(row[2]||'').trim(),
           tel:     String(row[3]||'').trim(),
-          email:   String(row[4]||'').trim(),
-          addr:    String(row[5]||'').trim(),
+          mobile:  String(row[4]||'').trim(),
+          email:   String(row[5]||'').trim(),
+          addr:    String(row[6]||'').trim(),
         };
         const existing=clientDB.find(c=>c.name===name);
         if(existing){
@@ -2610,31 +2561,27 @@ function importExcel(event){
       msg.className='import-msg error';
       msg.innerText='❌ 讀取失敗：'+err.message;
     }
-    // reset input so same file can be re-imported
     event.target.value='';
   };
   reader.readAsArrayBuffer(file);
 }
 
-/* Export DB to Excel */
 function exportDB(){
   if(clientDB.length===0){alert('資料庫是空的');return;}
-  const header=['姓名','統編','聯絡人','電話','Email','地址'];
-  const rows=clientDB.map(c=>[c.name,c.taxid,c.contact,c.tel,c.email,c.addr]);
+  const header=['姓名','統編','聯絡人','電話','手機','Email','地址'];
+  const rows=clientDB.map(c=>[c.name,c.taxid,c.contact,c.tel,c.mobile,c.email,c.addr]);
   const ws=XLSX.utils.aoa_to_sheet([header,...rows]);
-  // Column widths
-  ws['!cols']=[{wch:20},{wch:12},{wch:14},{wch:16},{wch:28},{wch:36}];
+  ws['!cols']=[{wch:20},{wch:12},{wch:14},{wch:16},{wch:16},{wch:28},{wch:36}];
   const wb=XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb,ws,'客戶資料庫');
   XLSX.writeFile(wb,'客戶資料庫.xlsx');
 }
 
-/* Download blank template */
 function downloadTemplate(){
-  const header=['姓名','統編','聯絡人','電話','Email','地址'];
-  const sample=['範例公司 / 王小明','12345678','王小明','0912-345-678','wang@example.com','台北市信義區XX路1號'];
+  const header=['姓名','統編','聯絡人','電話','手機','Email','地址'];
+  const sample=['範例公司 / 王小明','12345678','王小明','02-2345-6789','0912-345-678','wang@example.com','台北市信義區XX路1號'];
   const ws=XLSX.utils.aoa_to_sheet([header,sample]);
-  ws['!cols']=[{wch:20},{wch:12},{wch:14},{wch:16},{wch:28},{wch:36}];
+  ws['!cols']=[{wch:20},{wch:12},{wch:14},{wch:16},{wch:16},{wch:28},{wch:36}];
   const wb=XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb,ws,'客戶資料');
   XLSX.writeFile(wb,'客戶資料庫範本.xlsx');
@@ -2660,7 +2607,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-// 啟用離線快取 (Local Cache)，達到秒開的效果
 const db = initializeFirestore(app, {
   localCache: persistentLocalCache()
 });
